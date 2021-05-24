@@ -1,0 +1,46 @@
+@model RegisterViewModel
+
+
+<form class="sign-in-form" asp-controller="Auth" asp-action="Register" method="post">
+    <div>
+        <label>Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    
+    <div>
+        <label>Username</label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    
+    <div>
+        <label>Password</label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+    </div>
+    <div>
+        <label>Confirm Password</label>
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+    </div>
+    <div>
+        <label>Receive Summary?</label>
+        <input asp-for="ReceiveSummary" />
+        <span asp-validation-for="ReceiveSummary" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Phone Number</label>
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <input type="submit" value="Register" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
