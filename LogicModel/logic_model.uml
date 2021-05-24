@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.__EFMigrationsHistory</OriginalElement>
+  <nodes>
+    <node x="327.7594445390554" y="527.5413260672117">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetRoles</node>
+    <node x="697.9921875" y="35.0">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers</node>
+    <node x="1049.0" y="456.33137465706466">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserTokens</node>
+    <node x="511.35019164558685" y="681.0990874097142">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserRoles</node>
+    <node x="412.9163473546775" y="-96.67587042082954">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Camera</node>
+    <node x="697.4921875" y="645.2094416331474">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserLogins</node>
+    <node x="1049.0" y="310.90540879386685">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.__EFMigrationsHistory</node>
+    <node x="415.2508160195277" y="151.37420526793824">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.FollowedCamera</node>
+    <node x="381.25081601952775" y="327.45776566757496">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetRoleClaims</node>
+    <node x="980.6341833544132" y="645.2094416331474">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserClaims</node>
+    <node x="726.9921875" y="-212.34423251589462">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Sighting</node>
+    <node x="1054.7421875" y="159.21008980235518">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.FollowedSpecies</node>
+    <node x="1029.2421875" y="-96.67587042082954">c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Species</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserClaims" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers" relationship="REFERENCES">
+      <point x="0.0" y="-66.5" />
+      <point x="1079.1341833544132" y="609.1553923956678" />
+      <point x="863.6581652769503" y="609.1553923956678" />
+      <point x="863.6581652769503" y="504.0" />
+      <point x="0.0" y="234.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserTokens" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers" relationship="REFERENCES">
+      <point x="0.0" y="-66.5" />
+      <point x="1176.157462439055" y="456.33137465706466" />
+      <point x="1176.157462439055" y="548.8342766346021" />
+      <point x="912.9165078526819" y="548.8342766346021" />
+      <point x="912.9165078526819" y="488.87489534320355" />
+      <point x="829.9921875" y="488.87489534320355" />
+      <point x="0.0" y="234.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserRoles" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers" relationship="REFERENCES">
+      <point x="21.776354123947044" y="-42.0" />
+      <point x="617.1265457695339" y="740.8288520741858" />
+      <point x="608.4107893001158" y="740.8288520741858" />
+      <point x="608.4107893001158" y="597.8469262796962" />
+      <point x="737.6596646069747" y="597.8469262796962" />
+      <point x="737.6596646069747" y="490.3252314814817" />
+      <point x="705.4921875" y="490.3252314814817" />
+      <point x="-124.5" y="234.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetRoleClaims" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetRoles" relationship="REFERENCES">
+      <point x="0.0" y="-66.5" />
+      <point x="479.75081601952775" y="455.0" />
+      <point x="452.2594445390554" y="455.0" />
+      <point x="0.0" y="66.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Sighting" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Camera" relationship="REFERENCES">
+      <point x="51.5" y="-78.5" />
+      <point x="881.4921875" y="-130.78903012107958" />
+      <point x="491.9163473546775" y="-130.78903012107958" />
+      <point x="0.0" y="90.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.FollowedSpecies" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Species" relationship="REFERENCES">
+      <point x="-40.25" y="-54.5" />
+      <point x="1138.7421875" y="159.21008980235518" />
+      <point x="0.0" y="90.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserRoles" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetRoles" relationship="REFERENCES">
+      <point x="-69.96501735652521" y="-42.0" />
+      <point x="525.3851742890616" y="739.784748284121" />
+      <point x="409.37878241243794" y="739.784748284121" />
+      <point x="409.37878241243794" y="628.5440117858288" />
+      <point x="569.2594445390555" y="628.5440117858288" />
+      <point x="117.00000000000006" y="66.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.FollowedCamera" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers" relationship="REFERENCES">
+      <point x="40.75" y="-54.5" />
+      <point x="537.5008160195277" y="197.41953714111241" />
+      <point x="829.9921875" y="197.41953714111241" />
+      <point x="0.0" y="234.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.FollowedCamera" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Camera" relationship="REFERENCES">
+      <point x="-40.75" y="-54.5" />
+      <point x="456.0008160195277" y="205.87420526793824" />
+      <point x="491.9163473546775" y="205.87420526793824" />
+      <point x="0.0" y="90.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUserLogins" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers" relationship="REFERENCES">
+      <point x="0.0" y="-66.5" />
+      <point x="829.9921875" y="680.0804919974879" />
+      <point x="801.0918166668562" y="680.0804919974879" />
+      <point x="801.0918166668562" y="479.2488425925926" />
+      <point x="829.9921875" y="479.2488425925926" />
+      <point x="0.0" y="234.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Sighting" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.Species" relationship="REFERENCES">
+      <point x="-51.5" y="-78.5" />
+      <point x="778.4921875" y="-150.83617297042537" />
+      <point x="1138.7421875" y="-150.83617297042537" />
+      <point x="0.0" y="90.5" />
+    </edge>
+    <edge source="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.FollowedSpecies" target="c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetUsers" relationship="REFERENCES">
+      <point x="40.25" y="-54.5" />
+      <point x="1175.4921875" y="195.97944293066905" />
+      <point x="829.9921875" y="195.97944293066905" />
+      <point x="0.0" y="234.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6767942583732052" showDependencies="false" x="1202.1350772410706" y="376.80487804878084" />
+  <SelectedNodes>
+    <node>c109cdbe-b512-45d5-a81f-b35a253b3105.TABLE:Modelling2.dbo.AspNetRoleClaims</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
