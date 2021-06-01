@@ -35,9 +35,12 @@ namespace PenedaVes.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<string> GetTest()
+        public async Task<IActionResult> GetCameras()
         {
-            return new List<string>{"This", "is", "a", "test"};
+            var query = from camera in _context.Camera
+                select new {camera.Id, camera.Name};
+            
+            return Ok(await query.ToListAsync());
         }
 
     //     // GET: api/TodoItems/5
