@@ -13,5 +13,6 @@ namespace PenedaVes.Data
         }
         public DbSet<Camera> Camera { get; set; }
         public DbSet<Species> Species  { get; set; }
+        public DbSet<Sighting> Sightings  { get; set; }
     }
 }

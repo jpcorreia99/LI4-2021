@@ -47,14 +47,27 @@ namespace PenedaVes.Controllers
         // POST: api/ApiMovies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public IActionResult PostMovie(PartialSighting partialSighting)
+        public async Task<IActionResult> PostSighting(Sighting sighting)
         {   
+            var camera = await _context.Camera.FindAsync(sighting.CameraId);
+            if (camera == null)
+            {
+                return NotFound("Camera does not exist");
+            }
             
+            var species = await _context.Species.FindAsync(sighting.SpeciesId);
+            if (species == null)
+            {
+                return NotFound("Species does not exist");
+            }
             
-            Console.Write("lol");
-            Console.Write(partialSighting.ToString());
-            return Ok(partialSighting);
+            _context.Sightings.Add(sighting);
+            await _context.SaveChangesAsync();
+            
+            Console.WriteLine(sighting.ToString());
+            return Ok(sighting);
         }
+
 
         //     // POST: api/TodoItems
         //     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -66,17 +79,5 @@ namespace PenedaVes.Controllers
         //
         //         return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
         //     }
-    }
-    
-    public class PartialSighting
-    {
-        public int CameraId { get; set; }
-        public int SpeciesId { get; set; }
-        public int Quantity { get; set; }
-
-        public override string ToString()
-        {
-            return "Camera: " + CameraId + ",Species: " + "Species: " + SpeciesId + ", Qt: " + Quantity;
-        }
     }
 }
