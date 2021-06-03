@@ -1,3 +1,6 @@
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Design   
 dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+email:
+dotnet add package RestSharp --version 106.11.7

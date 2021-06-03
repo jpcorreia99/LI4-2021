@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Data;
 using PenedaVes.Models;
+using PenedaVes.Services.Email;
 
 namespace PenedaVes.Controllers
 {
@@ -19,10 +17,13 @@ namespace PenedaVes.Controllers
     public class SightingsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private IEmailService _emailService;
 
-        public SightingsController(AppDbContext context)
+        public SightingsController(AppDbContext context,
+            IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         // GET: api/GetSpecies
@@ -64,7 +65,13 @@ namespace PenedaVes.Controllers
             _context.Sightings.Add(sighting);
             await _context.SaveChangesAsync();
             
-            Console.WriteLine(sighting.ToString());
+            // Console.WriteLine(sighting.ToString());
+
+            if (sighting.Species.CommonName.Equals("Humano") && sighting.Camera.RestrictedZone)
+            {
+                Console.WriteLine("Omg é um o mano no sítio proíbido!!");
+                await _emailService.SendEmail("","Welcome", "Thank you for registering!");
+            }
             return Ok(sighting);
         }
     }
