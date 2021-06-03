@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -83,6 +84,10 @@ namespace PenedaVes.Controllers
             if (sighting.Species.CommonName.Equals("Humano") && sighting.Camera.RestrictedZone)
             {
                 await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
+            }
+            else
+            {
+             //   var query = _context.Species.Where(s => s.Id == categoryId).SelectMany(c => c.Articles)?
             }
         }
         private async Task AlertAdmins(string message)
