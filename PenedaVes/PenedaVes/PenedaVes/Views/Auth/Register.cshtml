@@ -37,6 +37,11 @@
         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div>
     <div>
+        <label>Admin?</label>
+        <input asp-for="IsAdmin" />
+        <span asp-validation-for="IsAdmin" class="text-danger"></span>
+    </div>
+    <div>
         <input type="submit" value="Register" />
     </div>
 </form>

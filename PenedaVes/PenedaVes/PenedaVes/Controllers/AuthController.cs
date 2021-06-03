@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
@@ -10,8 +9,8 @@ namespace PenedaVes.Controllers
 {
     public class AuthController : Controller
     {
-        private SignInManager<ApplicationUser> _signInManager;
-        private UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthController(SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager)
@@ -67,6 +66,19 @@ namespace PenedaVes.Controllers
             
             if (!result.Succeeded) return View(vm);
             
+            if (vm.IsAdmin)
+            {
+                var result2 = _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+
+                if (!result2.Succeeded)
+                {
+                    foreach (var error in result2.Errors)
+                    {
+                        Console.WriteLine(error.ToString());
+                    }
+                }
+            }
+
             await _signInManager.SignInAsync(user, false);
             return RedirectToAction("Index", "Home");
         }

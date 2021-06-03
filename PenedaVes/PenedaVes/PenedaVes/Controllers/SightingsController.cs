@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Data;
@@ -17,12 +18,15 @@ namespace PenedaVes.Controllers
     public class SightingsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         private IEmailService _emailService;
 
         public SightingsController(AppDbContext context,
+            UserManager<ApplicationUser> userManager,
             IEmailService emailService)
         {
             _context = context;
+            _userManager = userManager;
             _emailService = emailService;
         }
 
@@ -64,15 +68,34 @@ namespace PenedaVes.Controllers
             
             _context.Sightings.Add(sighting);
             await _context.SaveChangesAsync();
-            
-            // Console.WriteLine(sighting.ToString());
 
+            await HandleDangerousSituation(sighting);
+
+            return Ok(sighting);
+        }
+
+        /**
+         * Checks if the given sighting corresponds to a dangerous situation and,
+         * if so, send an email to the park's admins.
+         */
+        private async Task HandleDangerousSituation(Sighting sighting)
+        {
             if (sighting.Species.CommonName.Equals("Humano") && sighting.Camera.RestrictedZone)
             {
-                Console.WriteLine("Omg é um o mano no sítio proíbido!!");
-                await _emailService.SendEmail("","Welcome", "Thank you for registering!");
+                await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
             }
-            return Ok(sighting);
+        }
+        private async Task AlertAdmins(string message)
+        {
+            Console.WriteLine("Listing Admins");
+            var adminUsers = await _userManager.GetUsersInRoleAsync("admin");
+            foreach (ApplicationUser user in adminUsers)
+            {
+                Console.WriteLine("Sending email to: "+ user.UserName);
+                await _emailService.SendEmail(user.Email, "Notificação de perigo!", message);
+            }
+
+            Console.WriteLine("Completed");
         }
     }
 }
