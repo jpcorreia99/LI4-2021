@@ -37,7 +37,7 @@ namespace PenedaVes.Controllers
         public async Task<IActionResult> GetSpecies()
         {
             var query = from species in _context.Species
-                select new {species.Id, species.CommonName};
+                select new {species.Id, species.CommonName, species.IsPredatory};
 
             return Ok(await query.ToListAsync());
         }
@@ -46,7 +46,7 @@ namespace PenedaVes.Controllers
         public async Task<IActionResult> GetCameras()
         {
             var query = from camera in _context.Camera
-                select new {camera.Id, camera.Name};
+                select new {camera.Id, camera.Name, camera.RestrictedZone};
 
             return Ok(await query.ToListAsync());
         }
@@ -68,6 +68,8 @@ namespace PenedaVes.Controllers
                 return NotFound("Species does not exist");
             }
             
+            sighting.CaptureMoment=DateTime.Now;
+
             _context.Sightings.Add(sighting);
             await _context.SaveChangesAsync();
 
@@ -90,11 +92,12 @@ namespace PenedaVes.Controllers
                     break;
                 case "Humano":
                 {
+                    DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-5);
+                    
                     bool predatorySpeciesSeen = (from filteredSightings in _context.Sightings
                             where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
-                                  && sighting.CaptureMoment.Subtract(
-                                      filteredSightings.CaptureMoment).TotalMinutes < 5 // in the last 5 minutes
-                                  && sighting.Species.IsPredatory // where there are predatory species
+                                  &&  filteredSightings.CaptureMoment > fiveMinutesAgo // in the last 5 minutes
+                                  && filteredSightings.Species.IsPredatory // where there are predatory species
                             select filteredSightings.Species) // pick the species
                         .Any(); // check if list isn't empty;
 

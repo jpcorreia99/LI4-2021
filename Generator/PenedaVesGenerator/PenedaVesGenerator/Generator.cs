@@ -41,7 +41,17 @@ namespace PenedaVesGenerator
                 Console.WriteLine(camera.ToString());
             }
             
-            SendSighting();
+            Console.WriteLine("---------\n");
+            Console.WriteLine("0 - Choose Id's\n1 - Random id's\n2 - Exit");
+            string choice = Console.ReadLine();
+            while (!choice.Equals("2"))
+            {
+                SendSighting(choice);
+                Console.WriteLine("---------\n");
+                Console.WriteLine("0 - Choose Id's\n1 - Random id's\n2 - Exit");
+                choice = Console.ReadLine();
+            }
+
         }
 
         private static async Task<Dictionary<int,Species>> GetSpecies()
@@ -70,12 +80,10 @@ namespace PenedaVesGenerator
                     camera => camera);
         }
 
-        private static void SendSighting()
+        private static void SendSighting(string choice)
         {
             int speciesId, cameraId, quantity;
             
-            Console.WriteLine("0 - choose Id's, 1 - random id's");
-            string choice = Console.ReadLine();
 
             if (choice is "1")
             {
@@ -92,7 +100,7 @@ namespace PenedaVesGenerator
             }
             else
             {
-                Console.Write("Species Id:");
+                Console.Write("Species Id: ");
                 speciesId = int.Parse(Console.ReadLine() ?? "0");
                 Console.Write("Camera Id: ");
                 cameraId = int.Parse(Console.ReadLine() ?? "0");

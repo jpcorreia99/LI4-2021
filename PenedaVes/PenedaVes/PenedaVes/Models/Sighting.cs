@@ -8,7 +8,7 @@ namespace PenedaVes.Models
         [Required] public int Id { get; set; }
         [Required] public int CameraId { get; set; }
         [Required] public int SpeciesId { get; set; }
-        [Required] public DateTime CaptureMoment { get; set; } = DateTime.Now; 
+        [Required] public DateTime CaptureMoment { get; set; }
         [Required] public int Quantity { get; set; }
 
         public virtual Camera Camera { get; set; }

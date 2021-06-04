@@ -7,16 +7,26 @@ namespace PenedaVesGenerator
         [JsonPropertyName("id")] public int Id { get; set; }
         
         [JsonPropertyName("name")] public string Name { get; set; }
+        
+        [JsonPropertyName("restrictedZone")] public bool RestrictedZone { get; set; }
 
-        public Camera(int id, string name)
+        public Camera(int id, string name, bool restrictedZone)
         {
             Id = id;
             Name = name;
+            RestrictedZone = restrictedZone;
         }
 
         public override string ToString()
         {
-            return "Id: " + Id + ", Name: " + Name;
+            string res = "Id: " + Id + ", Name: " + Name;
+
+            if (RestrictedZone)
+            {
+                res += " !";
+            }
+
+            return res;
         }
     }
 }
