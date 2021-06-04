@@ -4,3 +4,5 @@ dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
 email:
 dotnet add package RestSharp --version 106.11.7
+sms:
+dotnet add package Twilio

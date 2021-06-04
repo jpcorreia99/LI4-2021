@@ -1,14 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using PenedaVes.Data;
 using PenedaVes.Models;
 using PenedaVes.Services.Email;
+using PenedaVes.Services.Phone;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace PenedaVes.Controllers
 {
@@ -21,15 +22,18 @@ namespace PenedaVes.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private IEmailService _emailService;
+        private readonly IEmailService _emailService;
+        private readonly ISmsService _smsService;
 
         public SightingsController(AppDbContext context,
             UserManager<ApplicationUser> userManager,
-            IEmailService emailService)
+            IEmailService emailService,
+            ISmsService smsService)
         {
             _context = context;
             _userManager = userManager;
             _emailService = emailService;
+            _smsService = smsService;
         }
 
         // GET: api/GetSpecies
@@ -72,7 +76,8 @@ namespace PenedaVes.Controllers
 
             _context.Sightings.Add(sighting);
             await _context.SaveChangesAsync();
-
+            
+            // if it's a dangerous situation, will notify admins by sms/email
             await HandleDangerousSituation(sighting);
 
             return Ok(sighting);
@@ -84,11 +89,13 @@ namespace PenedaVes.Controllers
          */
         private async Task HandleDangerousSituation(Sighting sighting)
         {
+            string message;
             switch (sighting.Species.CommonName)
             {
                 case "Humano" when sighting.Camera.RestrictedZone:
                    // await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
-                   Console.WriteLine("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
+                   message = "Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name;
+                   await AlertAdmins(message);
                     break;
                 case "Humano":
                 {
@@ -103,11 +110,12 @@ namespace PenedaVes.Controllers
 
                     if (predatorySpeciesSeen)
                     {
-                        Console.WriteLine("Humano em contacto com espécies predatórias.\nCâmara: "+ sighting.Camera.Name);
+                        message = "Humano em contacto com espécies predatórias.\nCâmara: "+ sighting.Camera.Name;
+                        await AlertAdmins(message);
                     }
                     break;
                 }
-                default: //TODO: testar
+                default:
                 {
                     if (sighting.Species.IsPredatory)
                     {
@@ -122,9 +130,10 @@ namespace PenedaVes.Controllers
 
                         if (HumansSeen)
                         {
-                            Console.WriteLine("Espécie predatória em contacto com área frequentada por humanos." +
-                                              "\nCâmara: " + sighting.Camera.Name + 
-                                              "\nEspécie: " + sighting.Species.CommonName);
+                            message = "Espécie predatória em contacto com área frequentada por humanos." +
+                                      "\nCâmara: " + sighting.Camera.Name + 
+                                      "\nEspécie: " + sighting.Species.CommonName;
+                            await AlertAdmins(message);
                         }
                     }
                     break;
@@ -133,15 +142,24 @@ namespace PenedaVes.Controllers
         }
         private async Task AlertAdmins(string message)
         {
-            Console.WriteLine("Listing Admins");
+            Console.WriteLine("Message to send: "+message);
+            
             var adminUsers = await _userManager.GetUsersInRoleAsync("admin");
             foreach (ApplicationUser user in adminUsers)
             {
-                Console.WriteLine("Sending email to: "+ user.UserName);
-                await _emailService.SendEmail(user.Email, "Notificação de perigo!", message);
-            }
 
-            Console.WriteLine("Completed");
+                if (user.UseEmail)
+                {
+                    Console.WriteLine("Sending email to: " + user.UserName);
+                    //await _emailService.SendEmail(user.Email, "Notificação de perigo!", message);
+                }
+                else if (user.UseCellphone)
+                {
+                    Console.WriteLine("Sending message to " + user.UserName + ", Phone number: " + user.PhoneNumber);
+                    //await _smsService.SendSms(user.PhoneNumber, message);
+                }
+            }
         }
+        
     }
 }
