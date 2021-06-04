@@ -19,6 +19,7 @@
       </PackageReference>
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
       <PackageReference Include="RestSharp" Version="106.11.7" />
+      <PackageReference Include="Twilio" Version="5.61.1" />
     </ItemGroup>
 
 </Project>

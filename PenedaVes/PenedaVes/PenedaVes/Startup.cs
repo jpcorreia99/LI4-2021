@@ -9,6 +9,7 @@ using PenedaVes.Configuration;
 using PenedaVes.Data;
 using PenedaVes.Models;
 using PenedaVes.Services.Email;
+using PenedaVes.Services.Phone;
 
 namespace PenedaVes
 {
@@ -27,6 +28,9 @@ namespace PenedaVes
             //Setup smtp
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
             services.AddSingleton<IEmailService, EmailService>();
+            //Setup twilio (sms)
+            services.Configure<TwilioSettings>(Configuration.GetSection("TwilioSettings"));
+            services.AddSingleton<ISmsService, SmsService>();
             
             services.AddControllersWithViews();
             
