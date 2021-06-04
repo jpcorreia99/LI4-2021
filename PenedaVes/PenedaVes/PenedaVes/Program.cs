@@ -36,19 +36,6 @@ namespace PenedaVes
                     roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(rootRole).GetAwaiter().GetResult();
                 }
-                //
-                // if (!ctx.Users.Any(u => u.UserName == "admin"))
-                // {
-                //     //create an admin
-                //     var adminUser = new IdentityUser
-                //     {
-                //         UserName = "admin",
-                //         Email = "admin@test.com"
-                //     };
-                //     userMgr.CreateAsync(adminUser, "password").GetAwaiter().GetResult();
-                //     //add role to user
-                //     userMgr.AddToRoleAsync(adminUser, adminRole.Name).GetAwaiter().GetResult();
-                // }
             }
             catch (Exception e)
             {
