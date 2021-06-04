@@ -39,7 +39,7 @@ namespace PenedaVes.Controllers
 
 
             DashboardViewModel vm = new DashboardViewModel{
-                cameras = cameraInfosList,
+                Cameras = cameraInfosList,
                 BingApiKey = _bingSettings.Value.ApiKey
             };
 

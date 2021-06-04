@@ -22,7 +22,7 @@
   
        map.setView({
                    mapTypeId: Microsoft.Maps.MapTypeId.road,
-                   center: new Microsoft.Maps.Location(41.907625, -8.104965),
+                   center: new Microsoft.Maps.Location(41.88292887810546, -8.21964876845546),
                    zoom: 11
                });
        
@@ -85,9 +85,9 @@
         }
   
         //add markers to map  
-        @if (Model.cameras != null)  
+        @if (Model.Cameras != null)  
         {  
-            foreach (CameraInfo camera in Model.cameras)  
+            foreach (CameraInfo camera in Model.Cameras)  
             {
                 @:addMarker(@camera.Latitude, @camera.Longitude, '@camera.Name', '@camera.RestrictedZone','@camera.PageUrl', @camera.SightingCount);  
             }  

@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using System.Security.Policy;
-using PenedaVes.Controllers;
-using PenedaVes.Models;
 
 namespace PenedaVes.ViewModels
 {
     public class DashboardViewModel
     {
-        public  List<CameraInfo> cameras { get; set; }
+        public  List<CameraInfo> Cameras { get; set; }
         public string  BingApiKey { get; set; }
     }
     
@@ -18,11 +15,9 @@ namespace PenedaVes.ViewModels
         public float Longitude { get; set; }
         public bool RestrictedZone { get; set; }
         public string PageUrl { get; set; }
-        
         //Number of sightings in the last 7 days
         public int SightingCount { get; set; }
-
-
+        
         public CameraInfo(string name, float latitude, float longitude, bool restrictedZone, string pageUrl, int sightingCount)
         {
             Name = name;
