@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using PenedaVes.Data;
 using PenedaVes.Models;
 using PenedaVes.Services.Email;
@@ -81,13 +82,42 @@ namespace PenedaVes.Controllers
          */
         private async Task HandleDangerousSituation(Sighting sighting)
         {
-            if (sighting.Species.CommonName.Equals("Humano") && sighting.Camera.RestrictedZone)
+            switch (sighting.Species.CommonName)
             {
-                await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
-            }
-            else
-            {
-             //   var query = _context.Species.Where(s => s.Id == categoryId).SelectMany(c => c.Articles)?
+                case "Humano" when sighting.Camera.RestrictedZone:
+                   // await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
+                   Console.WriteLine("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
+                    break;
+                case "Humano":
+                {
+                    bool predatorySpeciesSeen = (from filteredSightings in _context.Sightings
+                            where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
+                                  && sighting.CaptureMoment.Subtract(
+                                      filteredSightings.CaptureMoment).TotalMinutes < 5 // in the last 5 minutes
+                                  && sighting.Species.IsPredatory // where there are predatory species
+                            select filteredSightings.Species) // pick the species
+                        .Any(); // check if list isn't empty;
+
+                    if (predatorySpeciesSeen)
+                    {
+                        Console.Write("Big poopoo");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No poopoo");
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    if (sighting.Species.IsPredatory)
+                    {
+                        Console.WriteLine("---");
+                    }
+
+                    break;
+                }
             }
         }
         private async Task AlertAdmins(string message)
