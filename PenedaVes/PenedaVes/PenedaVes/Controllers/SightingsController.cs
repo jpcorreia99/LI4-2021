@@ -94,7 +94,7 @@ namespace PenedaVes.Controllers
             {
                 case "Humano" when sighting.Camera.RestrictedZone:
                    // await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
-                   message = "Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name;
+                   message = "Humano em zona restrita.\nCâmara: "+ sighting.Camera.Name;
                    await AlertAdmins(message);
                     break;
                 case "Humano":
