@@ -29,13 +29,14 @@ namespace PenedaVesGenerator
             
             SpeciesDict = await GetSpecies();
 
+            Console.WriteLine("----Species----");
             foreach (var species in SpeciesDict.Values)
             {
                 Console.WriteLine(species.ToString());
             }
             
             CamerasDict = await GetCameras();
-
+            Console.WriteLine("\n----Cameras----");
             foreach (var camera in CamerasDict.Values)
             {
                 Console.WriteLine(camera.ToString());

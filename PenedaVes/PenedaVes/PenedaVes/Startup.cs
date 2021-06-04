@@ -31,6 +31,8 @@ namespace PenedaVes
             //Setup twilio (sms)
             services.Configure<TwilioSettings>(Configuration.GetSection("TwilioSettings"));
             services.AddSingleton<ISmsService, SmsService>();
+            //Setup bing maps
+            services.Configure<BingSettings>(Configuration.GetSection("BingSettings"));
             
             services.AddControllersWithViews();
             
