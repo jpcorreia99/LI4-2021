@@ -103,22 +103,30 @@ namespace PenedaVes.Controllers
 
                     if (predatorySpeciesSeen)
                     {
-                        Console.Write("Big poopoo");
+                        Console.WriteLine("Humano em contacto com espécies predatórias.\nCâmara: "+ sighting.Camera.Name);
                     }
-                    else
-                    {
-                        Console.WriteLine("No poopoo");
-                    }
-
                     break;
                 }
-                default:
+                default: //TODO: testar
                 {
                     if (sighting.Species.IsPredatory)
                     {
-                        Console.WriteLine("---");
-                    }
+                        DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-5);
+                    
+                        bool HumansSeen = (from filteredSightings in _context.Sightings
+                                where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
+                                      &&  filteredSightings.CaptureMoment > fiveMinutesAgo // in the last 5 minutes
+                                      && filteredSightings.Species.CommonName.Equals("Humano") // where there are predatory species
+                                select filteredSightings) // pick the sightings that contain humans
+                            .Any(); // check if list isn't empty;
 
+                        if (HumansSeen)
+                        {
+                            Console.WriteLine("Espécie predatória em contacto com área frequentada por humanos." +
+                                              "\nCâmara: " + sighting.Camera.Name + 
+                                              "\nEspécie: " + sighting.Species.CommonName);
+                        }
+                    }
                     break;
                 }
             }
