@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,9 @@ using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
 namespace PenedaVes.Controllers
-{
+{    
+    [Authorize]
+    [Authorize]
     public class SpeciesController : Controller
     {
         private readonly AppDbContext _context;
@@ -39,10 +42,15 @@ namespace PenedaVes.Controllers
 
             var species = await _context.Species
                 .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (species == null)
             {
                 return NotFound();
             }
+
+            // var Cameras = _context.Species.Include(k => k.Sightings)
+            //     .ThenInclude(ss => ss.Camera).FirstOrDefault(k => k.Id == 1)
+            //     ?.Sightings.Select(s => s.Camera).Distinct().ToList();
 
             return View(species);
         }

@@ -17,6 +17,8 @@ namespace PenedaVes.Models
         public bool RestrictedZone { get; set; }
         [Required]
         public bool RestrictedArea { get; set; }
+        
+        public List<FollowedCamera> FollowedCameras { get; set; } // many-to-many table between users and cameras
 
         public Camera(int id, string name, float latitude, float longitude, bool restrictedZone, bool restrictedArea)
         {
@@ -36,6 +38,11 @@ namespace PenedaVes.Models
             RestrictedZone = restrictedZone;
             RestrictedArea = restrictedArea;
         }
-        
+
+        public override string ToString()
+        {
+            return "Id: " + Id + "\n"
+                   + "Name: " + Name;
+        }
     }
 }

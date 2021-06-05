@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace PenedaVes.Models
@@ -7,5 +8,8 @@ namespace PenedaVes.Models
         public bool ReceiveSummary { get; set; }
         public bool UseCellphone { get; set; }
         public bool UseEmail { get; set; }
+
+        public List<FollowedCamera> FollowedCameras { get; set; }
+        public List<FollowedSpecies> FollowedSpecies { get; set; } 
     }
 }
