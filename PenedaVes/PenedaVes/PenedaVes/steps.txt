@@ -10,6 +10,11 @@ imagens:
 dotnet add package SixLabors.ImageSharp.Web
 
 
+database:
+dotnet ef database update 0     
+dotnet ef database update     
+Update-database
+
 left to do:
 daily resume
 preferences

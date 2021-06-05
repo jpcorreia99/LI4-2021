@@ -36,6 +36,10 @@ namespace PenedaVes
                     roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
                     roleMgr.CreateAsync(rootRole).GetAwaiter().GetResult();
                 }
+                
+                var services = scope.ServiceProvider;
+                SeedData.Initialize(services);
+
             }
             catch (Exception e)
             {
