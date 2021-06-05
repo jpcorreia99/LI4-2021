@@ -8,3 +8,9 @@ sms:
 dotnet add package Twilio
 imagens:
 dotnet add package SixLabors.ImageSharp.Web
+
+
+left to do:
+daily resume
+preferences
+root user

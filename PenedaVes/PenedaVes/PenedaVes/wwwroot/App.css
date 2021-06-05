@@ -1,14 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
-/* adcionar o upload de imagens */
 
 .body{
     font-family: "Roboto", sans-serif; !important;
     font-weight: 300;
 }
 
+.SightingList {
+    width:100%;
+    height:610px;
+    border:1px solid #E0E0E0;
+    overflow: scroll;
+}
 
+.SightingListHeader {
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 1.15rem
+}
 
-.test{
-    font-weight: 400;
-    color:black;   
+.Sighting{
+    border-top: 1px solid #E0E0E0; border-bottom: 1px solid #E0E0E0;
+}
+
+.Sighting p{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.Sighting a{
+    color: inherit;
+}
+.Sighting a.hover{
+    text-decoration: underline;
 }

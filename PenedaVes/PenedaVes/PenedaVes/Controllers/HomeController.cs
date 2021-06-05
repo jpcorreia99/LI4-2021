@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PenedaVes.Configuration;
 using PenedaVes.Data;
@@ -32,7 +33,7 @@ namespace PenedaVes.Controllers
         {
             DateTime sevenDaysAgo = DateTime.Today.AddDays(-7);
             
-            List<CameraInfo> cameraInfosList = (from camera in _context.Camera.ToList()
+            List<CameraInfo> camerasInfoList = (from camera in _context.Camera.ToList()
                 let sightingCount = (
                     from sightings in _context.Sightings
                     where sightings.CameraId == camera.Id &&
@@ -42,17 +43,20 @@ namespace PenedaVes.Controllers
                     Url.Action("Details", "Cameras", new {id = camera.Id}), sightingCount)).ToList();
 
 
+            List<Sighting> sightingList = (from sightings in _context.Sightings
+                                        where sightings.CaptureMoment > sevenDaysAgo
+                                        select sightings)
+                                        .Include(s => s.Camera)
+                                        .Include(s => s.Species)
+                                        .OrderByDescending(x => x.CaptureMoment).ToList(); 
+            
             DashboardViewModel vm = new DashboardViewModel{
-                Cameras = cameraInfosList,
+                Cameras = camerasInfoList,
+                Sightings = sightingList,
                 BingApiKey = _bingSettings.Value.ApiKey
             };
 
             return View(vm);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [HttpGet("/Image/{image}")]
