@@ -100,10 +100,22 @@
     <div class="col-md-9 map">  
         <div id="myMap" style="width:100%; height:610px;"></div>  
     </div> 
-    <div class="col-md-3" style="width:100%; height:610px;border:1px solid #E0E0E0;">
-        <div style="text-align: center">
+    <div class="col-md-3 SightingList">
+        <div style="text-align: center; padding-bottom: 20px; padding-top: 20px; font-size: 1.15rem">
             <strong> Notificações de Avistamentos </strong>
         </div>
-        <p> Wth rengrone j</p>
+        <div class="Sighting">
+            <p><strong><a asp-action="Details" asp-controller="Species"
+                          asp-route-id="6">Doguinho</a> - 2 ind</strong></p>
+            <p>Câmara: <a asp-action="Details" asp-controller="Cameras"
+                          asp-route-id="5">Barragem do Lindoso</a></p>
+            <p>@DateTime.Now</p>
+        </div>
+        <div class="Sighting">
+            <p><strong><a asp-action="Details" asp-controller="Species"
+                          asp-route-id="6">Doguinho</a> - 2 ind</strong></p>
+            <p>Câmara: <a asp-action="Details" asp-controller="Cameras"
+                                                 asp-route-id="5">Barragem do Lindoso</a></p>
+        </div>
     </div>
 </div>  
