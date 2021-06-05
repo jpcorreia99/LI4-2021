@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using PenedaVes.Configuration;
 using PenedaVes.Data;
 using PenedaVes.Data.FileManager;
+using PenedaVes.Data.Repository;
 using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
@@ -25,56 +26,31 @@ namespace PenedaVes.Controllers
         private readonly IOptions<BingSettings> _bingSettings;
         private readonly IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        
+        private readonly IRepository _repository;
         public HomeController(AppDbContext context,
             IOptions<BingSettings> bingSettings,
             IFileManager fileManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IRepository repository)
         {
             _context = context;
             _bingSettings = bingSettings;
             _fileManager = fileManager;
             _userManager = userManager;
+            _repository = repository;
         }
 
         public async Task<IActionResult> Index()
         {
-            DateTime sevenDaysAgo = DateTime.Today.AddDays(-7);
-
             ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
-            
-            List<Camera> followedCameras = await _context.FollowedCamera
-                .Include(fc => fc.Camera)
-                .Where(fc => fc.UserId.Equals(user.Id))
-                .Select(fc => fc.Camera)
-                .ToListAsync();
-            
-            List<Species> followedSpecies = await _context.FollowedSpecies
-                .Include(fs => fs.Camera)
-                .Where(fs => fs.UserId.Equals(user.Id))
-                .Select(fs => fs.Camera)
-                .ToListAsync();
 
-            List<CameraInfo> camerasInfoList = (from camera in followedCameras
-                let sightingCount = (
-                    from sighting in _context.Sightings
-                    where sighting.CameraId == camera.Id &&
-                          sighting.CaptureMoment > sevenDaysAgo &&
-                          followedCameras.Contains(sighting.Camera) && // select only sightings in the users camera preferences
-                          followedSpecies.Contains(sighting.Species) // select only sightings in the users species preferences
-                    select sighting).Count() 
-                select new CameraInfo(camera.Name, camera.Latitude, camera.Longitude, camera.RestrictedZone,
-                    Url.Action("Details", "Cameras", new {id = camera.Id}), sightingCount)).ToList();
+            List<Camera> followedCameras = await _repository.GetFollowedCameras(user);
 
+            List<Species> followedSpecies = await _repository.GetFollowedSpecies(user);
 
-            List<Sighting> sightingList = await (from sighting in _context.Sightings
-                                        where sighting.CaptureMoment > sevenDaysAgo &&
-                                              followedCameras.Contains(sighting.Camera) && // select only sightings in the users camera preferences
-                                              followedSpecies.Contains(sighting.Species) // select only sightings in the users species preferences
-                                        select sighting)
-                                        .Include(s => s.Camera)
-                                        .Include(s => s.Species)
-                                        .OrderByDescending(x => x.CaptureMoment).ToListAsync(); 
+            List<CameraInfo> camerasInfoList = _repository.GetCameraInfo(followedCameras, followedSpecies);
+
+            List<Sighting> sightingList = await _repository.GetFollowedSightings(followedCameras, followedSpecies);
             
             DashboardViewModel vm = new DashboardViewModel{
                 Cameras = camerasInfoList,
