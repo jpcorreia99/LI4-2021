@@ -22,4 +22,8 @@
       <PackageReference Include="Twilio" Version="5.61.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="wwwroot\App.css" />
+    </ItemGroup>
+
 </Project>
