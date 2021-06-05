@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using PenedaVes.Models;
 
 namespace PenedaVes.ViewModels
 {
     public class DashboardViewModel
     {
         public  List<CameraInfo> Cameras { get; set; }
+        public List<Sighting> Sightings { get; set; }
         public string  BingApiKey { get; set; }
     }
     
