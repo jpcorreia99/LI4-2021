@@ -70,6 +70,5 @@ namespace PenedaVes.Data.FileManager
         {
             return new(Path.Combine(_imagePath, image), FileMode.Open, FileAccess.Read);
         }
-
     }
 }
