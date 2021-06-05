@@ -59,11 +59,6 @@ namespace PenedaVes.Controllers
             return View(vm);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [HttpGet("/Image/{image}")]
         public IActionResult Image(string image)
         {
