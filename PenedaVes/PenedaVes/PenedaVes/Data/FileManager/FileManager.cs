@@ -18,7 +18,6 @@ namespace PenedaVes.Data.FileManager
             _imagePath = config["Path:Images"];
         }
         
-        
         public async Task<string> SaveImage(IFormFile image)
         {
             try

@@ -48,7 +48,7 @@ namespace PenedaVes.Controllers
         }
 
         // GET: Species/Create
-        public IActionResult Create() //TODO: alterar o edit
+        public IActionResult Create()
         {
             return View(new SpeciesViewModel());
         }
