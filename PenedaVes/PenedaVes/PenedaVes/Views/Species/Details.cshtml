@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var basePath = Context.Request.PathBase;
 }
 
 <h1>Details</h1>
@@ -39,7 +40,12 @@
             @Html.DisplayNameFor(model => model.Image)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
+            @if (!String.IsNullOrEmpty(Model.Image))
+            {
+                var imagePath = $"{basePath}/Image/{Model.Image}";
+                <img src="@imagePath"  alt="Image did not render" width="500px"/>
+            }
+
         </dd>
     </dl>
 </div>

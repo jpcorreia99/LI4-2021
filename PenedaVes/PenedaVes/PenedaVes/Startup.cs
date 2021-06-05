@@ -7,9 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PenedaVes.Configuration;
 using PenedaVes.Data;
+using PenedaVes.Data.FileManager;
 using PenedaVes.Models;
 using PenedaVes.Services.Email;
 using PenedaVes.Services.Phone;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 
 namespace PenedaVes
 {
@@ -25,6 +27,8 @@ namespace PenedaVes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IFileManager, FileManager>();
+            
             //Setup smtp
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
             services.AddSingleton<IEmailService, EmailService>();
@@ -52,6 +56,9 @@ namespace PenedaVes
             {
                 options.LoginPath = "/Auth/Login";
             });
+
+            // Add the default service and options.
+            services.AddImageSharp();
 
         }
 

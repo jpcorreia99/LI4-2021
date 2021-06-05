@@ -6,3 +6,5 @@ email:
 dotnet add package RestSharp --version 106.11.7
 sms:
 dotnet add package Twilio
+imagens:
+dotnet add package SixLabors.ImageSharp.Web
