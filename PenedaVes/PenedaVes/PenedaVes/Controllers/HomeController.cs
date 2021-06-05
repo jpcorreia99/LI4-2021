@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PenedaVes.Configuration;
 using PenedaVes.Data;
+using PenedaVes.Data.FileManager;
 using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
@@ -16,12 +17,15 @@ namespace PenedaVes.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IOptions<BingSettings> _bingSettings;
+        private IFileManager _fileManager;
         
         public HomeController(AppDbContext context,
-            IOptions<BingSettings> bingSettings)
+            IOptions<BingSettings> bingSettings,
+            IFileManager fileManager)
         {
             _context = context;
             _bingSettings = bingSettings;
+            _fileManager = fileManager;
         }
 
         public IActionResult Index()
@@ -51,6 +55,13 @@ namespace PenedaVes.Controllers
             return View();
         }
 
+        [HttpGet("/Image/{image}")]
+        public IActionResult Image(string image)
+        {
+            var mime = image.Substring(image.LastIndexOf('.') + 1); // after the '.'
+            return new FileStreamResult(_fileManager.ImageStream(image), $"image/{mime}");
+        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

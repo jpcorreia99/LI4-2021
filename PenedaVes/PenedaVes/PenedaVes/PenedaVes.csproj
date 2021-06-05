@@ -19,11 +19,16 @@
       </PackageReference>
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
       <PackageReference Include="RestSharp" Version="106.11.7" />
+      <PackageReference Include="SixLabors.ImageSharp.Web" Version="1.0.3" />
       <PackageReference Include="Twilio" Version="5.61.1" />
     </ItemGroup>
 
     <ItemGroup>
       <None Include="wwwroot\App.css" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\content\sightings" />
     </ItemGroup>
 
 </Project>

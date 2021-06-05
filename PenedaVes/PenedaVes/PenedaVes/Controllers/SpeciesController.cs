@@ -6,17 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Data;
+using PenedaVes.Data.FileManager;
 using PenedaVes.Models;
+using PenedaVes.ViewModels;
 
 namespace PenedaVes.Controllers
 {
     public class SpeciesController : Controller
     {
         private readonly AppDbContext _context;
+        private IFileManager _fileManager;
 
-        public SpeciesController(AppDbContext context)
+        public SpeciesController(AppDbContext context, IFileManager fileManager)
         {
             _context = context;
+            _fileManager = fileManager;
         }
 
         // GET: Species
@@ -44,9 +48,9 @@ namespace PenedaVes.Controllers
         }
 
         // GET: Species/Create
-        public IActionResult Create()
+        public IActionResult Create() //TODO: alterar o edit
         {
-            return View();
+            return View(new SpeciesViewModel());
         }
 
         // POST: Species/Create
@@ -54,15 +58,23 @@ namespace PenedaVes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CommonName,ScientificName,Description,IsPredatory,Image")] Species species)
+        public async Task<IActionResult> Create(SpeciesViewModel vm)
         {
-            if (ModelState.IsValid)
+            Species species = new Species
             {
-                _context.Add(species);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(species);
+                Id = vm.Id,
+                CommonName = vm.CommonName,
+                ScientificName = vm.ScientificName,
+                Description = vm.Description,
+                IsPredatory = vm.IsPredatory,
+                Image = await _fileManager.SaveImage(vm.Image)
+            };
+
+
+            _context.Species.Add(species);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Species/Edit/5
@@ -78,7 +90,17 @@ namespace PenedaVes.Controllers
             {
                 return NotFound();
             }
-            return View(species);
+            
+            
+            return View(new SpeciesViewModel
+            {
+                Id = species.Id,
+                CommonName = species.CommonName,
+                ScientificName = species.ScientificName,
+                Description = species.Description,
+                IsPredatory = species.IsPredatory,
+                CurrentImage =  species.Image
+            });
         }
 
         // POST: Species/Edit/5
@@ -86,17 +108,36 @@ namespace PenedaVes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CommonName,ScientificName,Description,IsPredatory,Image")] Species species)
+        public async Task<IActionResult> Edit(int id,SpeciesViewModel vm)
         {
-            if (id != species.Id)
+            if (id != vm.Id)
             {
                 return NotFound();
             }
 
-            if (!ModelState.IsValid) return View(species);
+            if (!ModelState.IsValid) return View(vm);
             
+            var species = new Species
+            {
+                Id = vm.Id,
+                CommonName = vm.CommonName,
+                ScientificName = vm.ScientificName,
+                Description = vm.Description,
+                IsPredatory = vm.IsPredatory
+            };
+
             try
             {
+                if (vm.Image == null)
+                    species.Image = vm.CurrentImage;
+                else
+                {
+                    if (!string.IsNullOrEmpty(vm.CurrentImage)) // Deletes the old image
+                        _fileManager.RemoveImage(vm.CurrentImage);
+                
+                    species.Image = await _fileManager.SaveImage(vm.Image);
+                }
+                
                 _context.Update(species);
                 await _context.SaveChangesAsync();
             }
@@ -136,7 +177,12 @@ namespace PenedaVes.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var species = await _context.Species.FindAsync(id);
+            
+            if (!string.IsNullOrEmpty(species.Image))
+                _fileManager.RemoveImage(species.Image);
+            
             _context.Species.Remove(species);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
