@@ -25,7 +25,7 @@ namespace PenedaVes.Data.Repository
             _linkGenerator = linkGenerator;
         }
 
-        public async Task<List<Camera>> GetFollowedCameras(ApplicationUser user)
+        private async Task<List<Camera>> GetFollowedCameras(ApplicationUser user)
         {
             return await _context.FollowedCamera
                 .Include(fc => fc.Camera)
@@ -34,7 +34,7 @@ namespace PenedaVes.Data.Repository
                 .ToListAsync();
         }
         
-        public async Task<List<Species>> GetFollowedSpecies(ApplicationUser user)
+        private async Task<List<Species>> GetFollowedSpecies(ApplicationUser user)
         {
             return await _context.FollowedSpecies
                 .Include(fs => fs.Species)
@@ -44,23 +44,29 @@ namespace PenedaVes.Data.Repository
 
         }
 
-        public async Task<List<Sighting>> GetFollowedSightings(List<Camera> followedCameras,
-            List<Species> followedSpecies)
+        public async Task<List<Sighting>> GetFollowedSightings(ApplicationUser user, DateTime lowerLimit, DateTime upperLimit)
         {
+            List<Camera> followedCameras = await GetFollowedCameras(user);
+            List<Species> followedSpecies = await GetFollowedSpecies(user);
+            
             DateTime sevenDaysAgo = DateTime.Today.AddDays(-7);
             
             return await (from sighting in _context.Sightings
                     where sighting.CaptureMoment > sevenDaysAgo &&
                           followedCameras.Contains(sighting.Camera) && // select only sightings in the user's camera preferences
-                          followedSpecies.Contains(sighting.Species) // select only sightings in the user's species preferences
+                          followedSpecies.Contains(sighting.Species) && // select only sightings in the user's species preferences
+                          sighting.CaptureMoment > lowerLimit &&
+                          sighting.CaptureMoment <= upperLimit
                     select sighting)
                 .Include(s => s.Camera)
                 .Include(s => s.Species)
                 .OrderByDescending(x => x.CaptureMoment).ToListAsync();
         }
 
-        public List<CameraInfo> GetCameraInfo(List<Camera> followedCameras, List<Species> followedSpecies)
+        public async Task<List<CameraInfo>> GetCameraInfo(ApplicationUser user)
         {
+            List<Camera> followedCameras = await GetFollowedCameras(user);
+            List<Species> followedSpecies = await GetFollowedSpecies(user);
             DateTime sevenDaysAgo = DateTime.Today.AddDays(-7);
             
             return (from camera in followedCameras

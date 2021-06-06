@@ -153,7 +153,7 @@ namespace PenedaVes.Models
                 
                 Sighting sighting5 = new Sighting
                 {
-                    CaptureMoment = now.AddHours(-3),
+                    CaptureMoment = now.AddMinutes(-15),
                     SpeciesId = garrano.Id,
                     CameraId = ermica.Id,
                     Quantity = 3

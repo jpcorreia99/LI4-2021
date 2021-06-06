@@ -7,7 +7,7 @@ namespace PenedaVes.ViewModels
     {
         public  List<CameraInfo> Cameras { get; set; }
         public List<Sighting> Sightings { get; set; }
-        public string  BingApiKey { get; set; }
+        public string BingApiKey { get; set; }
     }
     
     public class CameraInfo
