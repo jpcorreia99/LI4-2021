@@ -49,6 +49,17 @@
     </dl>
 </div>
 
+<form asp-controller="Species" asp-action="Details" method="get" asp-route-id="@Model.Species.Id"> <!-- Default method is post -->
+    <p>
+        <label asp-for="BeginningDate"></label>
+        <input asp-for="BeginningDate" />
+        
+        <label asp-for="EndingDate"></label>
+        <input asp-for="EndingDate" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <div class="col-md-6 SightingListDetails">
     <div class="SightingListHeader">
         <strong> Notificações de Avistamentos </strong>

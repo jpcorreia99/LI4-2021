@@ -41,7 +41,7 @@ namespace PenedaVes.Controllers
         }
 
         // GET: Species/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, DateTime beginningDate, DateTime endingDate)
         {
             if (id == null)
             {
@@ -56,13 +56,20 @@ namespace PenedaVes.Controllers
                 return NotFound();
             }
             
-            DateTime endingDate = DateTime.Now.Date;
+            if (endingDate.Equals(DateTime.MinValue))
+            {
+                endingDate = DateTime.Now.Date;
+            }
             
-            DateTime beginningDate = DateTime.Today.AddDays(-7);
+            if (beginningDate.Equals(DateTime.MinValue))
+            {
+                beginningDate = DateTime.Today.AddDays(-7);
+            }
 
-                endingDate = endingDate.Date.AddHours(23).AddMinutes(59).AddSeconds(59); // to include the day
-            
+            endingDate = endingDate.Date.AddHours(23).AddMinutes(59).AddSeconds(59); // to include the day
+
             ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+            
             List<Sighting> sightings = await _repository.GetSpeciesSightings(species, user, 
                 beginningDate, endingDate);
             
