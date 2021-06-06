@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PenedaVes.Models;
@@ -18,5 +19,7 @@ namespace PenedaVes.Data.Repository
         
         /* Returns info about the cameras of the application, such as number of sightings in the last 7 days */
         List<CameraInfo> GetCameraInfo(List<Camera> followedCameras, List<Species> followedSpecies);
+        
+        Task<List<Sighting>> GetCameraSightings(Camera camera, ApplicationUser user, DateTime lowerLimit, DateTime upperLimit);
     }
 }
