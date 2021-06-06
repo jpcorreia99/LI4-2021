@@ -21,22 +21,6 @@ namespace PenedaVes
             try
             {
                 var scope = host.Services.CreateScope();
-
-                var ctx = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-                ctx.Database.EnsureCreated();
-
-                var adminRole = new IdentityRole("Admin");
-                var rootRole = new IdentityRole("Root");
-                if (!ctx.Roles.Any())
-                {
-                    //create a role
-                    roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
-                    roleMgr.CreateAsync(rootRole).GetAwaiter().GetResult();
-                }
-                
                 var services = scope.ServiceProvider;
                 SeedData.Initialize(services);
 

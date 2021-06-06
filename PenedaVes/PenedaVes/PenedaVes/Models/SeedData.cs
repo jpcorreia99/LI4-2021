@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using PenedaVes.Data;
 
 namespace PenedaVes.Models
@@ -14,7 +16,7 @@ namespace PenedaVes.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<AppDbContext>>()))
             {
-                // Look for any movies.
+                // Check if DB is empty
                 if (context.Species.Any())
                 {
                     return;   // DB has been seeded
@@ -80,9 +82,11 @@ namespace PenedaVes.Models
                     IsPredatory = false,
                     Image = "img_05-06-2021-18-16-252.jpg"
                 };
+
+                List<Species> speciesList = new List<Species> {lobo,corco,vibora,garrano,tartanhao,humano};
                 
                 context.Species.AddRange(
-                    lobo,corco,vibora,garrano,tartanhao,humano
+                    speciesList
                 );
 
                 Camera lindoso = new Camera("Barragem do lindoso",
@@ -105,9 +109,11 @@ namespace PenedaVes.Models
                 Camera campo_geres = new Camera("Campo do Geres", 41.812498, -8.163385, false, false);
 
                 Camera soajo = new Camera("Soajo", 41.867512, -8.257215, false, false);
-                
+
+                List<Camera> cameraList = new List<Camera>
+                    {lindoso, varzea, bordenca, gorbelas, campo_soajo, paradela, ermica, rio_homem, campo_geres, soajo};
                 context.Camera.AddRange(
-                    lindoso,varzea,bordenca,gorbelas,campo_soajo,paradela,ermica,rio_homem,campo_geres,soajo
+                    cameraList
                 );
                 context.SaveChanges();
                 
@@ -222,6 +228,59 @@ namespace PenedaVes.Models
                     sighting6,sighting7,sighting8, sighting9, sighting10, sighting11,
                     sighting12, sighting13
                 );
+                
+                // creating the root user
+                                
+                var roleMgr = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userMgr = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                
+                var adminRole = new IdentityRole("Admin");
+                var rootRole = new IdentityRole("Root");
+
+                //create a role
+                roleMgr.CreateAsync(adminRole).GetAwaiter().GetResult();
+                roleMgr.CreateAsync(rootRole).GetAwaiter().GetResult();
+
+                //create the root user
+                var rootUser = new ApplicationUser
+                {
+                    UserName = "root",
+                    Email = "root@test.com",
+                    UseCellphone = false,
+                    UseEmail = false,
+                    ReceiveSummary = false,
+                    PhoneNumber = "-"
+                };
+                
+                var result = userMgr.CreateAsync(rootUser, "password").GetAwaiter().GetResult();
+                Console.WriteLine(result.Succeeded);
+                
+                
+                
+                //add role to user
+                userMgr.AddToRoleAsync(rootUser, adminRole.Name).GetAwaiter().GetResult();
+                userMgr.AddToRoleAsync(rootUser, rootRole.Name).GetAwaiter().GetResult();
+
+                context.SaveChanges();
+                
+                foreach (var fc in cameraList.Select(camera => new FollowedCamera
+                {
+                    CameraId = camera.Id,
+                    UserId = rootUser.Id
+                }))
+                {
+                    context.Add(fc);
+                }
+                
+                foreach (var fs in speciesList.Select(species => new FollowedSpecies()
+                {
+                    SpeciesId = species.Id,
+                    UserId = rootUser.Id
+                }))
+                {
+                    context.Add(fs);
+                }
                 
                 context.SaveChanges();
             }

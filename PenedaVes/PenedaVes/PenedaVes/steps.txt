@@ -17,9 +17,9 @@ Update-database
 
 left to do:
 daily resume
-preferences
 root user
 atualizar views
+atualizar permissoes (editar câmaras e espécies para admin)
 
 // var Cameras = _context.Species.Include(k => k.Sightings)
 //     .ThenInclude(ss => ss.Camera).FirstOrDefault(k => k.Id == 1)
