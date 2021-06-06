@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Data;
@@ -7,6 +8,7 @@ using PenedaVes.Models;
 
 namespace PenedaVes.Controllers
 {
+    [Authorize]
     public class CamerasController : Controller
     {
         private readonly AppDbContext _context;

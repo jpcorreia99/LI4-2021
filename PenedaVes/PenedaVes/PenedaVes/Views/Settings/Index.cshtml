@@ -1,0 +1,76 @@
+@model SettingsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form asp-action="ChangeSettings">
+    <table>
+        <h3> Espécies seguidas</h3>
+        @for (int i = 0; i < Model.SpeciesBoxes.Count; i++)
+        {
+            @if (i % 3 == 0)
+            {
+                @:<tr></tr>
+            }
+            <td>
+                @Html.CheckBoxFor(model => model.SpeciesBoxes[i].IsChecked)
+                <label> @Model.SpeciesBoxes[i].CommonName</label>
+                @Html.HiddenFor(model => model.SpeciesBoxes[i].CommonName)
+                @Html.HiddenFor(model => model.SpeciesBoxes[i].SpeciesId)
+            </td>
+        }
+    </table>
+    
+    <h3> Câmaras seguidas</h3>
+    <table>
+        @for (int i = 0; i < Model.CameraBoxes.Count; i++)
+        {
+            @if (i % 3 == 0)
+            {
+                @:<tr></tr>
+            }
+            <td>
+                @Html.CheckBoxFor(model => model.CameraBoxes[i].IsChecked)
+                <label> @Model.CameraBoxes[i].Name</label>
+                @Html.HiddenFor(model => model.CameraBoxes[i].Name)
+                @Html.HiddenFor(model => model.CameraBoxes[i].CameraId)
+            </td>
+        }
+    </table>
+    
+    <h3>Preferências</h3>
+    <div class="col-md-4">
+        <div class="form-group form-check" >
+            <label asp-for="ReceiveSummary" class="form-check-label">
+                <input class="form-check-input" asp-for="ReceiveSummary" /> @Html.DisplayNameFor(model => model.ReceiveSummary)
+            </label>
+            <span asp-validation-for="ReceiveSummary" class="text-danger"></span>
+        </div>
+        
+        
+        <div class="form-group">
+            <label asp-for="PhoneNumber" class="control-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group form-check" >
+            <label asp-for="UseCellphone" class="form-check-label">
+                <input class="form-check-input" asp-for="UseCellphone" /> @Html.DisplayNameFor(model => model.UseCellphone)
+            </label>
+            <span asp-validation-for="UseCellphone" class="text-danger"></span>
+        </div>
+        
+        
+        <div class="form-group form-check" >
+            <label asp-for="UseEmail" class="form-check-label">
+                <input class="form-check-input" asp-for="UseEmail" /> @Html.DisplayNameFor(model => model.UseEmail)
+            </label>
+            <span asp-validation-for="UseEmail" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Alterar"/>
+    </div>
+</form>

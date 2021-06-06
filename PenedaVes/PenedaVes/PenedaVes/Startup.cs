@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using PenedaVes.Configuration;
 using PenedaVes.Data;
 using PenedaVes.Data.FileManager;
+using PenedaVes.Data.Repository;
 using PenedaVes.Models;
 using PenedaVes.Services.Email;
 using PenedaVes.Services.Phone;
@@ -28,6 +29,7 @@ namespace PenedaVes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IFileManager, FileManager>();
+            services.AddTransient<IRepository, Repository>();
             
             //Setup smtp
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));

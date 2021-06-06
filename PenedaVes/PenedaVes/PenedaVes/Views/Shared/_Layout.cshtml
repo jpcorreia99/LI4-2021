@@ -26,13 +26,13 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index">Species</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index">Espécies</a>
                     </li>
                    <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cameras" asp-action="Index">Cameras</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cameras" asp-action="Index">Câmaras</a>
                     </li>
                     
                     @if (User.Identity.IsAuthenticated)
@@ -41,7 +41,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" > Welcome @User.Identity.Name </a>
+                            <a class="nav-link text-dark" asp-controller="Settings" asp-action="Index">
+                                @User.Identity.Name
+                            </a>
                         </li> 
                     }
                     else

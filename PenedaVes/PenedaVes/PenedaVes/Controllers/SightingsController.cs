@@ -94,12 +94,13 @@ namespace PenedaVes.Controllers
             {
                 case "Humano" when sighting.Camera.RestrictedZone:
                    // await AlertAdmins("Humano em zona restrita:\nCâmara: "+ sighting.Camera.Name);
-                   message = "Humano em zona restrita.\nCâmara: "+ sighting.Camera.Name;
+                   message = "Humano em zona restrita.\nCâmara: "+ sighting.Camera.Name +
+                             "\nEnviar equipa de investigação";
                    await AlertAdmins(message);
                     break;
                 case "Humano":
                 {
-                    DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-5);
+                    DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-3);
                     
                     bool predatorySpeciesSeen = (from filteredSightings in _context.Sightings
                             where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
@@ -110,7 +111,8 @@ namespace PenedaVes.Controllers
 
                     if (predatorySpeciesSeen)
                     {
-                        message = "Humano em contacto com espécies predatórias.\nCâmara: "+ sighting.Camera.Name;
+                        message = "Humano em contacto com espécies predatórias.\nCâmara: "+ sighting.Camera.Name
+                            +"\nEnviar equipa de socorro";
                         await AlertAdmins(message);
                     }
                     break;
@@ -119,7 +121,7 @@ namespace PenedaVes.Controllers
                 {
                     if (sighting.Species.IsPredatory)
                     {
-                        DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-5);
+                        DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-3);
                     
                         bool HumansSeen = (from filteredSightings in _context.Sightings
                                 where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
@@ -132,7 +134,8 @@ namespace PenedaVes.Controllers
                         {
                             message = "Espécie predatória em contacto com área frequentada por humanos." +
                                       "\nCâmara: " + sighting.Camera.Name + 
-                                      "\nEspécie: " + sighting.Species.CommonName;
+                                      "\nEspécie: " + sighting.Species.CommonName+
+                                      "\nEnviar equipa de socorro";
                             await AlertAdmins(message);
                         }
                     }
