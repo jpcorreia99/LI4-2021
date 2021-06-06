@@ -42,25 +42,35 @@
     </table>
     
     <h3>Preferências</h3>
-    <div>
-        <label>Receive Summary?</label>
-        <input asp-for="ReceiveSummary" />
-        <span asp-validation-for="ReceiveSummary" class="text-danger"></span>
+    <div class="col-md-4">
+        <div class="form-group form-check" >
+            <label asp-for="ReceiveSummary" class="form-check-label">
+                <input class="form-check-input" asp-for="ReceiveSummary" /> @Html.DisplayNameFor(model => model.ReceiveSummary)
+            </label>
+            <span asp-validation-for="ReceiveSummary" class="text-danger"></span>
+        </div>
+        
+        
+        <div class="form-group">
+            <label asp-for="PhoneNumber" class="control-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group form-check" >
+            <label asp-for="UseCellphone" class="form-check-label">
+                <input class="form-check-input" asp-for="UseCellphone" /> @Html.DisplayNameFor(model => model.UseCellphone)
+            </label>
+            <span asp-validation-for="UseCellphone" class="text-danger"></span>
+        </div>
+        
+        
+        <div class="form-group form-check" >
+            <label asp-for="UseEmail" class="form-check-label">
+                <input class="form-check-input" asp-for="UseEmail" /> @Html.DisplayNameFor(model => model.UseEmail)
+            </label>
+            <span asp-validation-for="UseEmail" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Alterar"/>
     </div>
-    <div>
-        <label>Phone Number</label>
-        <input asp-for="PhoneNumber" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
-    <div>
-        <label>Use cellphone</label>
-        <input asp-for="UseCellphone" />
-        <span asp-validation-for="UseCellphone" class="text-danger"></span>
-    </div>
-    <div>
-        <label>Use email</label>
-        <input asp-for="UseEmail" />
-        <span asp-validation-for="UseEmail" class="text-danger"></span>
-    </div>
-    <input type="submit" value="Alterar"/>
 </form>
