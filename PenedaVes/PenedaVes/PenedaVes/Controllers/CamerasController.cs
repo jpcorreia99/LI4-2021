@@ -34,6 +34,7 @@ namespace PenedaVes.Controllers
         {
             return View(await _context.Camera.ToListAsync());
         }
+        
 
         // GET: Cameras/Details/5
         public async Task<IActionResult> Details(int? id,DateTime beginningDate, DateTime endingDate)

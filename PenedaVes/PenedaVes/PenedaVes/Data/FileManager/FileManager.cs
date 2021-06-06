@@ -39,7 +39,7 @@ namespace PenedaVes.Data.FileManager
                 //Encode here for quality
                 var encoder = new JpegEncoder
                 {
-                    Quality = 30 //Use variable to set between 5-30 based on your requirements -> 30 best res
+                    Quality = 30 //Use vari2able to set between 5-30 based on your requirements -> 30 best res
                 };
                 await imageObject.SaveAsync(filePath,encoder);
                     

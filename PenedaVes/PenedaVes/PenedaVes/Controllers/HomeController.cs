@@ -26,6 +26,7 @@ namespace PenedaVes.Controllers
         private readonly IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository _repository;
+        
         public HomeController(
             IOptions<BingSettings> bingSettings,
             IFileManager fileManager,
@@ -41,14 +42,13 @@ namespace PenedaVes.Controllers
         public async Task<IActionResult> Index()
         {
             ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
-
-            List<Camera> followedCameras = await _repository.GetFollowedCameras(user);
-
-            List<Species> followedSpecies = await _repository.GetFollowedSpecies(user);
-
-            List<CameraInfo> camerasInfoList = _repository.GetCameraInfo(followedCameras, followedSpecies);
-
-            List<Sighting> sightingList = await _repository.GetFollowedSightings(followedCameras, followedSpecies);
+            
+            List<CameraInfo> camerasInfoList = await _repository.GetCameraInfo(user);
+            
+            DateTime lowerLimit = DateTime.Today.AddDays(-7);
+            DateTime upperLimit = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+            
+            List<Sighting> sightingList = await _repository.GetFollowedSightings(user, lowerLimit, upperLimit);
             
             DashboardViewModel vm = new DashboardViewModel{
                 Cameras = camerasInfoList,
