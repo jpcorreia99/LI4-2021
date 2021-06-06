@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -43,16 +42,23 @@ namespace PenedaVesGenerator
             }
             
             Console.WriteLine("---------\n");
-            Console.WriteLine("0 - Choose Id's\n1 - Random id's\n2 - Exit");
+            Console.WriteLine("0 - Escolher Id's\n1 - Random Id's\n2 - Enviar Resumo Diário\n3 - Sair");
             string choice = Console.ReadLine();
-            while (!choice.Equals("2"))
+            while (!choice.Equals("3"))
             {
-                SendSighting(choice);
+                if (choice.Equals("2"))
+                {
+                    SendResume();
+                }
+                else
+                {
+                    SendSighting(choice);
+                }
+
                 Console.WriteLine("---------\n");
-                Console.WriteLine("0 - Choose Id's\n1 - Random id's\n2 - Exit");
+                Console.WriteLine("0 - Escolher Id's\n1 - Random Id's\n2 - Enviar Resumo Diário\n3 - Sair");
                 choice = Console.ReadLine();
             }
-
         }
 
         private static async Task<Dictionary<int,Species>> GetSpecies()
@@ -101,11 +107,11 @@ namespace PenedaVesGenerator
             }
             else
             {
-                Console.Write("Species Id: ");
+                Console.Write("Espécie Id: ");
                 speciesId = int.Parse(Console.ReadLine() ?? "0");
-                Console.Write("Camera Id: ");
+                Console.Write("Câmara Id: ");
                 cameraId = int.Parse(Console.ReadLine() ?? "0");
-                Console.Write("Quantity: ");
+                Console.Write("Quantidade: ");
                 quantity = int.Parse(Console.ReadLine() ?? "1");
             }
 
@@ -135,6 +141,19 @@ namespace PenedaVesGenerator
             try
             {
                 httpWebRequest.GetResponse();
+                Console.WriteLine("Success");
+            }
+            catch (WebException)
+            {
+                Console.WriteLine("Request failed");
+            }
+        }
+
+        private static void SendResume()
+        {
+            try
+            {
+                _client.GetAsync("https://localhost:5001/api/SendResume");
                 Console.WriteLine("Success");
             }
             catch (WebException)
