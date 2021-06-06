@@ -1,50 +1,55 @@
 @model RegisterViewModel
 
 
-<form class="sign-in-form" asp-controller="Auth" asp-action="Register" method="post">
-    <div>
-        <label>Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    
-    <div>
-        <label>Username</label>
-        <input asp-for="Username" />
-        <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
-    
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div class="col-md-4">
 
-    </div>
-    <div>
-        <label>Confirm Password</label>
-        <input asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <form class="sign-in-form" asp-controller="Auth" asp-action="Register" method="post">
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input class="form-control" asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+    
+            <div class="form-group">
+                <label class="control-label">Username</label>
+                <input class="form-control" asp-for="Username" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+    
+            <div class="form-group">
+                <label class="control-label">Password</label>
+                <input class="form-control" asp-for="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
 
+            </div>
+            <div class="form-group">
+                <label class="control-label">Confirmar Password</label>
+                <input class="form-control" asp-for="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+            </div>
+            <div class="form-group form-check">
+                <label class="control-label">
+                    <input class="form-check-input" asp-for="ReceiveSummary" /> Receber resumo diário?
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Número de telemóvel</label>
+                <input class="form-control" asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="control-label">
+                    <input class="form-check-input" asp-for="IsAdmin" /> Admin?
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registar" />
+            </div>
+        </form>
     </div>
-    <div>
-        <label>Receive Summary?</label>
-        <input asp-for="ReceiveSummary" />
-        <span asp-validation-for="ReceiveSummary" class="text-danger"></span>
-    </div>
-    <div>
-        <label>Phone Number</label>
-        <input asp-for="PhoneNumber" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
-    <div>
-        <label>Admin?</label>
-        <input asp-for="IsAdmin" />
-        <span asp-validation-for="IsAdmin" class="text-danger"></span>
-    </div>
-    <div>
-        <input type="submit" value="Registar" />
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
