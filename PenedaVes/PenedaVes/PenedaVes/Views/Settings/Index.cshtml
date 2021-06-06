@@ -1,0 +1,44 @@
+@model SettingsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form asp-action="Create">
+    <table>
+        <h3> Espécies seguidas</h3>
+        @for (int i = 0; i < Model.SpeciesBoxes.Count; i++)
+        {
+            @if (i % 3 == 0)
+            {
+                @:<tr></tr>
+            }
+            <td>
+                @Html.CheckBoxFor(model => model.SpeciesBoxes[i].IsChecked)
+                <label> @Model.SpeciesBoxes[i].CommonName</label>
+                @Html.HiddenFor(model => model.SpeciesBoxes[i].CommonName)
+                @Html.HiddenFor(model => model.SpeciesBoxes[i].SpeciesId)
+            </td>
+        }
+    </table>
+    
+    <h3> Câmaras seguidas</h3>
+    <table>
+            @for (int i = 0; i < Model.CameraBoxes.Count; i++)
+            {
+                @if (i % 3 == 0)
+                {
+                    @:<tr></tr>
+                }
+                <td>
+                @Html.CheckBoxFor(model => model.CameraBoxes[i].IsChecked)
+                <label> @Model.CameraBoxes[i].Name</label>
+                @Html.HiddenFor(model => model.CameraBoxes[i].Name)
+                @Html.HiddenFor(model => model.CameraBoxes[i].CameraId)
+                </td>
+            }
+        </table>
+    <input type="submit" value="Submit"/>
+</form>

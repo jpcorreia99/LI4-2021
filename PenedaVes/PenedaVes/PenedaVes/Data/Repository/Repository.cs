@@ -37,9 +37,9 @@ namespace PenedaVes.Data.Repository
         public async Task<List<Species>> GetFollowedSpecies(ApplicationUser user)
         {
             return await _context.FollowedSpecies
-                .Include(fs => fs.Camera)
+                .Include(fs => fs.Species)
                 .Where(fs => fs.UserId.Equals(user.Id))
-                .Select(fs => fs.Camera)
+                .Select(fs => fs.Species)
                 .ToListAsync();
 
         }

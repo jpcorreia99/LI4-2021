@@ -12,8 +12,7 @@ using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
 namespace PenedaVes.Controllers
-{    
-    [Authorize]
+{
     [Authorize]
     public class SpeciesController : Controller
     {
@@ -47,10 +46,6 @@ namespace PenedaVes.Controllers
             {
                 return NotFound();
             }
-
-            // var Cameras = _context.Species.Include(k => k.Sightings)
-            //     .ThenInclude(ss => ss.Camera).FirstOrDefault(k => k.Id == 1)
-            //     ?.Sightings.Select(s => s.Camera).Distinct().ToList();
 
             return View(species);
         }

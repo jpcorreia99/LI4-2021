@@ -19,3 +19,8 @@ left to do:
 daily resume
 preferences
 root user
+atualizar views
+
+// var Cameras = _context.Species.Include(k => k.Sightings)
+//     .ThenInclude(ss => ss.Camera).FirstOrDefault(k => k.Id == 1)
+//     ?.Sightings.Select(s => s.Camera).Distinct().ToList();
