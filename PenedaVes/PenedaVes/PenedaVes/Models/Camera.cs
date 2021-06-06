@@ -17,7 +17,7 @@ namespace PenedaVes.Models
         public float Latitude { get; set; }
         [Required]
         public float Longitude { get; set; }
-        
+
         [Required]
         [DisplayName("Zona Restrita?")]
         public bool RestrictedZone { get; set; }

@@ -15,8 +15,8 @@ namespace PenedaVes.Data.Repository
         /* Returns the Sightings captured in the last 7 days be the followed cameras and that contain
          the followed species by the user*/
         Task<List<Sighting>> GetFollowedSightings(List<Camera> followedCameras, List<Species> followedSpecies);
-
         
+        /* Returns info about the cameras of the application, such as number of sightings in the last 7 days */
         List<CameraInfo> GetCameraInfo(List<Camera> followedCameras, List<Species> followedSpecies);
     }
 }

@@ -72,8 +72,7 @@ namespace PenedaVes.Controllers
                 IsPredatory = vm.IsPredatory,
                 Image = await _fileManager.SaveImage(vm.Image)
             };
-
-
+            
             _context.Species.Add(species);
             await _context.SaveChangesAsync();
 

@@ -37,13 +37,13 @@
             @Html.DisplayFor(model => model.IsPredatory)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
+            Imagem
         </dt>
         <dd class = "col-sm-10">
             @if (!String.IsNullOrEmpty(Model.Image))
             {
                 var imagePath = $"{basePath}/Image/{Model.Image}";
-                <img src="@imagePath"  alt="Image did not render" width="500px"/>
+                <img src="@imagePath"  alt="Image did not render" width="256px" height="256px"/>
             }
 
         </dd>
