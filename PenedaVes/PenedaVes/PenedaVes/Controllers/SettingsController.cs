@@ -34,14 +34,18 @@ namespace PenedaVes.Controllers
             SettingsViewModel vm = new SettingsViewModel
             {
                 SpeciesBoxes = await GetSpeciesBoxList(user),
-                CameraBoxes = await GetCameraBoxList(user)
+                CameraBoxes = await GetCameraBoxList(user),
+                ReceiveSummary = user.ReceiveSummary,
+                PhoneNumber = user.PhoneNumber,
+                UseCellphone = user.UseCellphone,
+                UseEmail = user.UseEmail
             };
             
             return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SettingsViewModel vm)
+        public async Task<IActionResult> ChangeSettings(SettingsViewModel vm)
         {
             ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
             
@@ -49,6 +53,13 @@ namespace PenedaVes.Controllers
             
             await HandleSpeciesSettings(vm, user);
 
+            user.ReceiveSummary = vm.ReceiveSummary;
+            user.PhoneNumber = vm.PhoneNumber;
+            user.UseCellphone = vm.UseCellphone;
+            user.UseEmail = vm.UseEmail;
+
+            _context.Users.Update(user);
+            
             await _context.SaveChangesAsync();
             
             return RedirectToAction("Index", "Home");

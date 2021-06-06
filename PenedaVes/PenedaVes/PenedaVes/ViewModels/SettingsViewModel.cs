@@ -7,10 +7,10 @@ namespace PenedaVes.ViewModels
         public List<SpeciesBox> SpeciesBoxes { get; set; }
         public List<CameraBox> CameraBoxes { get; set; }
 
-        // public bool ReceiveSummary { get; set; }
-        // public string PhoneNumber { get; set; }
-        // public bool UseEmail { get; set; }
-        // public bool UseCellphone { get; set; }
+        public bool ReceiveSummary { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool UseEmail { get; set; }
+        public bool UseCellphone { get; set; }
     }
 
     public class SpeciesBox

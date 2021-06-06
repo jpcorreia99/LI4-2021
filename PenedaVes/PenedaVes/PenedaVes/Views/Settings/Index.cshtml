@@ -6,7 +6,7 @@
 }
 
 
-<form asp-action="Create">
+<form asp-action="ChangeSettings">
     <table>
         <h3> Espécies seguidas</h3>
         @for (int i = 0; i < Model.SpeciesBoxes.Count; i++)
@@ -26,19 +26,41 @@
     
     <h3> Câmaras seguidas</h3>
     <table>
-            @for (int i = 0; i < Model.CameraBoxes.Count; i++)
+        @for (int i = 0; i < Model.CameraBoxes.Count; i++)
+        {
+            @if (i % 3 == 0)
             {
-                @if (i % 3 == 0)
-                {
-                    @:<tr></tr>
-                }
-                <td>
+                @:<tr></tr>
+            }
+            <td>
                 @Html.CheckBoxFor(model => model.CameraBoxes[i].IsChecked)
                 <label> @Model.CameraBoxes[i].Name</label>
                 @Html.HiddenFor(model => model.CameraBoxes[i].Name)
                 @Html.HiddenFor(model => model.CameraBoxes[i].CameraId)
-                </td>
-            }
-        </table>
-    <input type="submit" value="Submit"/>
+            </td>
+        }
+    </table>
+    
+    <h3>Preferências</h3>
+    <div>
+        <label>Receive Summary?</label>
+        <input asp-for="ReceiveSummary" />
+        <span asp-validation-for="ReceiveSummary" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Phone Number</label>
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Use cellphone</label>
+        <input asp-for="UseCellphone" />
+        <span asp-validation-for="UseCellphone" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Use email</label>
+        <input asp-for="UseEmail" />
+        <span asp-validation-for="UseEmail" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Alterar"/>
 </form>
