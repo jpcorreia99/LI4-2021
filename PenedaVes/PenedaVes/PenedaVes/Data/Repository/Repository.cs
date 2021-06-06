@@ -89,13 +89,26 @@ namespace PenedaVes.Data.Repository
                                     followedSpeciesIds.Contains(sighting.SpeciesId)
                            select sighting)
                         .Include(s => s.Species)
+                        .OrderByDescending(x => x.CaptureMoment)
                         .ToListAsync();
-
-
-
-
-
         }
-        
+
+        public async Task<List<Sighting>> GetSpeciesSightings(Species species, ApplicationUser user,
+            DateTime lowerLimit, DateTime upperLimit)
+        {
+            List<int> followedCamerasIds = (await GetFollowedCameras(user))
+                .Select(s => s.Id)
+                .ToList();
+
+            return await (from sighting in _context.Sightings
+                    where sighting.SpeciesId == species.Id && 
+                          sighting.CaptureMoment > lowerLimit &&
+                          sighting.CaptureMoment <= upperLimit &&
+                          followedCamerasIds.Contains(sighting.SpeciesId)
+                    select sighting)
+                .Include(s => s.Camera)
+                .OrderByDescending(x => x.CaptureMoment)
+                .ToListAsync();
+        }
     }
 }

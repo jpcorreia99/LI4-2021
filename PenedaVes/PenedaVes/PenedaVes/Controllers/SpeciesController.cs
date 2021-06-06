@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Data;
 using PenedaVes.Data.FileManager;
+using PenedaVes.Data.Repository;
 using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
@@ -17,11 +19,18 @@ namespace PenedaVes.Controllers
     public class SpeciesController : Controller
     {
         private readonly AppDbContext _context;
-        private IFileManager _fileManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IFileManager _fileManager;
+        private readonly IRepository _repository;
 
-        public SpeciesController(AppDbContext context, IFileManager fileManager)
+        public SpeciesController(AppDbContext context, 
+            UserManager<ApplicationUser> userManager,
+            IRepository repository,
+            IFileManager fileManager)
         {
             _context = context;
+            _userManager = userManager;
+            _repository = repository;
             _fileManager = fileManager;
         }
 
@@ -46,8 +55,24 @@ namespace PenedaVes.Controllers
             {
                 return NotFound();
             }
+            
+            DateTime endingDate = DateTime.Now.Date;
+            
+            DateTime beginningDate = DateTime.Today.AddDays(-7);
 
-            return View(species);
+                endingDate = endingDate.Date.AddHours(23).AddMinutes(59).AddSeconds(59); // to include the day
+            
+            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+            List<Sighting> sightings = await _repository.GetSpeciesSightings(species, user, 
+                beginningDate, endingDate);
+            
+            SpeciesDetailsViewModel vm = new SpeciesDetailsViewModel
+            {
+                Species = species,
+                CapturedSightings = sightings
+            };
+            
+            return View(vm);
         }
 
         // GET: Species/Create
