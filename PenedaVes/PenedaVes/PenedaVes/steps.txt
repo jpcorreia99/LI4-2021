@@ -11,13 +11,5 @@ dotnet add package SixLabors.ImageSharp.Web
 
 
 database:
-dotnet ef database update 0     
-dotnet ef database update     
-Update-database
-
-left to do:
-daily resume
-
-// var Cameras = _context.Species.Include(k => k.Sightings)
-//     .ThenInclude(ss => ss.Camera).FirstOrDefault(k => k.Id == 1)
-//     ?.Sightings.Select(s => s.Camera).Distinct().ToList();
+dotnet ef database update 0     // limpar db
+dotnet ef database update       // (re)construir db
