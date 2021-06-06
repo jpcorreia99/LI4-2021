@@ -22,18 +22,16 @@ namespace PenedaVes.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly AppDbContext _context;
         private readonly IOptions<BingSettings> _bingSettings;
         private readonly IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository _repository;
-        public HomeController(AppDbContext context,
+        public HomeController(
             IOptions<BingSettings> bingSettings,
             IFileManager fileManager,
             UserManager<ApplicationUser> userManager,
             IRepository repository)
         {
-            _context = context;
             _bingSettings = bingSettings;
             _fileManager = fileManager;
             _userManager = userManager;

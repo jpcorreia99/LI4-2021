@@ -1,19 +1,22 @@
 @model LoginViewModel
 
-
-<form class="sign-in-form" asp-controller="Auth" asp-action="Login" method="post">
-    <div>
-        <label>Username</label>
-        <input asp-for="Username" />
+<div class="row">
+    <div class="col-md-4">
+        <form class="sign-in-form" asp-controller="Auth" asp-action="Login" method="post">
+            <div class="form-group">
+                <label class="control-label">Username</label>
+                <input class="form-control" asp-for="Username" />
+            </div>
+            <div class="form-group" >
+                <label class="control-label">Password</label>
+                <input class="form-control" asp-for="Password" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+            <div>
+                <a asp-controller="Auth" asp-action="Register">Registar</a>
+            </div>
+        </form>
     </div>
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" />
-    </div>
-    <div>
-        <input type="submit" value="Login" />
-    </div>
-    <div>
-        <a asp-controller="Auth" asp-action="Register">Registar</a>
-    </div>
-</form>
+</div>

@@ -75,6 +75,40 @@ namespace PenedaVes.Data.Repository
                     _linkGenerator.GetPathByAction("Details", "Cameras", new {id = camera.Id}),
                     sightingCount)).ToList();
         }
-        
+
+        public async Task<List<Sighting>> GetCameraSightings(Camera camera, ApplicationUser user, DateTime lowerLimit, DateTime upperLimit)
+        {
+            List<int> followedSpeciesIds = (await GetFollowedSpecies(user))
+                                            .Select(s => s.Id)
+                                            .ToList();
+
+            return await (from sighting in _context.Sightings
+                           where sighting.CameraId == camera.Id && 
+                                    sighting.CaptureMoment > lowerLimit &&
+                                    sighting.CaptureMoment <= upperLimit &&
+                                    followedSpeciesIds.Contains(sighting.SpeciesId)
+                           select sighting)
+                        .Include(s => s.Species)
+                        .OrderByDescending(x => x.CaptureMoment)
+                        .ToListAsync();
+        }
+
+        public async Task<List<Sighting>> GetSpeciesSightings(Species species, ApplicationUser user,
+            DateTime lowerLimit, DateTime upperLimit)
+        {
+            List<int> followedCamerasIds = (await GetFollowedCameras(user))
+                .Select(s => s.Id)
+                .ToList();
+
+            return await (from sighting in _context.Sightings
+                    where sighting.SpeciesId == species.Id && 
+                          sighting.CaptureMoment > lowerLimit &&
+                          sighting.CaptureMoment <= upperLimit &&
+                          followedCamerasIds.Contains(sighting.SpeciesId)
+                    select sighting)
+                .Include(s => s.Camera)
+                .OrderByDescending(x => x.CaptureMoment)
+                .ToListAsync();
+        }
     }
 }

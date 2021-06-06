@@ -17,8 +17,7 @@ Update-database
 
 left to do:
 daily resume
-root user
-atualizar views
+atualizar views (apagar link da imagem dos index)
 atualizar permissoes (editar câmaras e espécies para admin)
 
 // var Cameras = _context.Species.Include(k => k.Sightings)

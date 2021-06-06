@@ -1,10 +1,15 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Data;
+using PenedaVes.Data.Repository;
 using PenedaVes.Models;
+using PenedaVes.ViewModels;
 
 namespace PenedaVes.Controllers
 {
@@ -12,10 +17,16 @@ namespace PenedaVes.Controllers
     public class CamerasController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRepository _repository;
 
-        public CamerasController(AppDbContext context)
+        public CamerasController(AppDbContext context,
+            UserManager<ApplicationUser> userManager,
+            IRepository repository)
         {
             _context = context;
+            _userManager = userManager;
+            _repository = repository;
         }
 
         // GET: Cameras
@@ -25,7 +36,7 @@ namespace PenedaVes.Controllers
         }
 
         // GET: Cameras/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id,DateTime beginningDate, DateTime endingDate)
         {
             if (id == null)
             {
@@ -38,8 +49,30 @@ namespace PenedaVes.Controllers
             {
                 return NotFound();
             }
+            
+            if (endingDate.Equals(DateTime.MinValue))
+            {
+                endingDate = DateTime.Now.Date;
+            }
+            
+            if (beginningDate.Equals(DateTime.MinValue))
+            {
+                beginningDate = DateTime.Today.AddDays(-7);
+            }
 
-            return View(camera);
+            endingDate = endingDate.Date.AddHours(23).AddMinutes(59).AddSeconds(59); // to include the day
+            
+            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+            List<Sighting> sightings = await _repository.GetCameraSightings(camera, user, 
+                beginningDate, endingDate);
+
+            CameraDetailsViewModel vm = new CameraDetailsViewModel
+            {
+                Camera = camera,
+                CapturedSightings = sightings,
+            };
+            
+            return View(vm);
         }
 
         // GET: Cameras/Create

@@ -1,4 +1,4 @@
-@model PenedaVes.Models.Species
+@model SpeciesDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -13,43 +13,73 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CommonName)
+            @Html.DisplayNameFor(model => model.Species.CommonName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CommonName)
+            @Html.DisplayFor(model => model.Species.CommonName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ScientificName)
+            @Html.DisplayNameFor(model => model.Species.ScientificName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ScientificName)
+            @Html.DisplayFor(model => model.Species.ScientificName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Species.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Species.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPredatory)
+            @Html.DisplayNameFor(model => model.Species.IsPredatory)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPredatory)
+            @Html.DisplayFor(model => model.Species.IsPredatory)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
+            Imagem
         </dt>
         <dd class = "col-sm-10">
-            @if (!String.IsNullOrEmpty(Model.Image))
+            @if (!String.IsNullOrEmpty(Model.Species.Image))
             {
-                var imagePath = $"{basePath}/Image/{Model.Image}";
-                <img src="@imagePath"  alt="Image did not render" width="500px"/>
+                var imagePath = $"{basePath}/Image/{Model.Species.Image}";
+                <img src="@imagePath"  alt="Image did not render" width="256px" height="256px"/>
             }
-
         </dd>
     </dl>
 </div>
+
+<form asp-controller="Species" asp-action="Details" method="get" asp-route-id="@Model.Species.Id"> <!-- Default method is post -->
+    <p>
+        <label asp-for="BeginningDate"></label>
+        <input asp-for="BeginningDate" />
+        
+        <label asp-for="EndingDate"></label>
+        <input asp-for="EndingDate" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<div class="col-md-6 SightingListDetails">
+    <div class="SightingListHeader">
+        <strong> Notificações de Avistamentos </strong>
+    </div>
+
+    @foreach (var sighting in Model.CapturedSightings)
+    {
+        <div class="Sighting">
+            <p><strong> @sighting.Quantity indivíduos</strong></p>
+            <p>Câmara: <a asp-action="Details" asp-controller="Cameras"
+                          asp-route-id="@sighting.CameraId">@sighting.Camera.Name</a></p>
+            <p>@sighting.CaptureMoment</p>
+        </div>
+    }
+</div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Voltar à listagem</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Species.Id">Edit |</a> 
+    }
+    <a asp-action="Index"> Voltar à listagem</a>
 </div>

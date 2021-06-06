@@ -1,8 +1,7 @@
-@model PenedaVes.Models.Camera
+@model CameraDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Detalhes</h1>
@@ -12,38 +11,70 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Camera.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Camera.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
+            @Html.DisplayNameFor(model => model.Camera.Latitude)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Latitude)
+            @Html.DisplayFor(model => model.Camera.Latitude)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
+            @Html.DisplayNameFor(model => model.Camera.Longitude)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Longitude)
+            @Html.DisplayFor(model => model.Camera.Longitude)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RestrictedZone)
+            @Html.DisplayNameFor(model => model.Camera.RestrictedZone)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RestrictedZone)
+            @Html.DisplayFor(model => model.Camera.RestrictedZone)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RestrictedArea)
+            @Html.DisplayNameFor(model => model.Camera.RestrictedArea)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RestrictedArea)
+            @Html.DisplayFor(model => model.Camera.RestrictedArea)
         </dd>
     </dl>
 </div>
+
+
+<form asp-controller="Cameras" asp-action="Details" method="get" asp-route-id="@Model.Camera.Id"> <!-- Default method is post -->
+    <p>
+        <label asp-for="BeginningDate"></label>
+        <input asp-for="BeginningDate" />
+        
+        <label asp-for="EndingDate"></label>
+        <input asp-for="EndingDate" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+
+<div class="col-md-6 SightingListDetails">
+    <div class="SightingListHeader">
+        <strong> Notificações de Avistamentos </strong>
+    </div>
+
+    @foreach (var sighting in Model.CapturedSightings)
+    {
+        <div class="Sighting">
+            <p><strong><a asp-action="Details" asp-controller="Species"
+                          asp-route-id="@sighting.SpeciesId">@sighting.Species.CommonName</a> - @sighting.Quantity indivíduos</strong></p>
+            <p>@sighting.CaptureMoment</p>
+        </div>
+    }
+</div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    @if (User.IsInRole("Admin"))
+    {
+            <a asp-action="Edit" asp-route-id="@Model.Camera.Id">Editar |</a> 
+    }
     <a asp-action="Index">Voltar à listagem</a>
 </div>

@@ -7,9 +7,13 @@
 
 <h1>Lista de Câmaras</h1>
 
-<p>
-    <a asp-action="Create">Criar</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Criar</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -50,9 +54,17 @@
                 @Html.DisplayFor(modelItem => item.RestrictedArea)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar </a> 
+                }
+               
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> 
+            
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
             </td>
         </tr>
 }
