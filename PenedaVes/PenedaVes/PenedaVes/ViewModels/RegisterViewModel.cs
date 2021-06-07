@@ -22,7 +22,6 @@ namespace PenedaVes.ViewModels
 
         public bool ReceiveSummary { get; set; }
         
-        [Required]
         public string PhoneNumber { get; set; }
         
         public bool IsAdmin { get; set; }

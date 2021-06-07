@@ -121,11 +121,11 @@ namespace PenedaVes.Controllers
                 {
                     if (sighting.Species.IsPredatory)
                     {
-                        DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-3);
+                        DateTime threeMinutesAgo = DateTime.Now.AddMinutes(-3);
                     
                         bool HumansSeen = (from filteredSightings in _context.Sightings
                                 where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
-                                      &&  filteredSightings.CaptureMoment > fiveMinutesAgo // in the last 5 minutes
+                                      &&  filteredSightings.CaptureMoment > threeMinutesAgo // in the last 5 minutes
                                       && filteredSightings.Species.CommonName.Equals("Humano") // where there are predatory species
                                 select filteredSightings) // pick the sightings that contain humans
                             .Any(); // check if list isn't empty;
