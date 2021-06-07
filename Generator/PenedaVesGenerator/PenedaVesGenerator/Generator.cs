@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PenedaVesGenerator
@@ -42,17 +43,26 @@ namespace PenedaVesGenerator
             }
             
             Console.WriteLine("---------\n");
-            Console.WriteLine("0 - Escolher Id's\n1 - Random Id's\n2 - Enviar Resumo Diário\n3 - Sair");
+            Console.WriteLine("0 - Escolher Id's\n1 - Random Id's\n2 - Enviar Resumo Diário\n3 - Correr em modo persistente \n4 - Sair");
             string choice = Console.ReadLine();
-            while (!choice.Equals("3"))
+            while (!choice.Equals("4"))
             {
-                if (choice.Equals("2"))
+                switch (choice)
                 {
-                    SendResume();
-                }
-                else
-                {
-                    SendSighting(choice);
+                    case "2":
+                        SendResume();
+                        break;
+                    case "3":
+                    {
+                        while (true)
+                        {
+                            SendSighting("1"); // random Id's
+                            Thread.Sleep(3000);
+                        }
+                    }
+                    default:
+                        SendSighting(choice);
+                        break;
                 }
 
                 Console.WriteLine("---------\n");
@@ -103,7 +113,7 @@ namespace PenedaVesGenerator
                 int cameraIndex = r.Next(0, camerasIds.Count);
                 cameraId = camerasIds[cameraIndex];
                 
-                quantity = r.Next(0, 6);
+                quantity = r.Next(1, 6);
             }
             else
             {
