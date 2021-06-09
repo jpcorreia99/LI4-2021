@@ -58,6 +58,7 @@ namespace PenedaVes.Controllers
                 if (await _userManager.IsInRoleAsync(user, "Admin") && !ub.IsChecked)
                 {
                     await _userManager.RemoveFromRoleAsync(user, "Admin");
+                    await RemovePrivilegedCameras(user);
                 }
                 else if (!await _userManager.IsInRoleAsync(user, "Admin")
                          && ub.IsChecked)  // if the permission were added
@@ -70,6 +71,18 @@ namespace PenedaVes.Controllers
             
             return RedirectToAction("Index", "Home"); 
         }
-        
+
+        // Stops the user from following cameras exclusive to admins
+        private async Task RemovePrivilegedCameras(ApplicationUser user)
+        {
+            List<FollowedCamera> followedRestrictedCameras =
+                await (from fc in _context.FollowedCamera
+                    where fc.Camera.RestrictedArea &&
+                          fc.UserId == user.Id
+                        select fc).ToListAsync();
+            
+            _context.RemoveRange(followedRestrictedCameras);
+            await _context.SaveChangesAsync();
+        }
     }
 }
