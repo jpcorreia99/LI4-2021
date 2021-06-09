@@ -44,26 +44,12 @@ namespace PenedaVes.Controllers
                 userBoxes.Add(ub);
             }
 
-            RootViewModel vm = new RootViewModel {UserBoxesList = userBoxes};
-            
-            return View(vm);
+            return View(new RootViewModel {UserBoxesList = userBoxes});
         }
 
         [HttpPost]
         public async Task<IActionResult> ChangePermissions(RootViewModel vm)
         {
-
-            // foreach(var (key, value) in Request.Form)
-            // {
-            //     Console.Write(key +": ");
-            //     Console.WriteLine(value.ToString());
-            // }
-            // Console.WriteLine(vm.UserBoxesList==null);
-            // Console.WriteLine(vm.test==null);
-            //
-            // Console.WriteLine(vm.test);
-            // Console.WriteLine(vm.UserBoxesList.Count);
-            
             foreach (UserBox ub in vm.UserBoxesList)
             {
                 ApplicationUser user = await _userManager.FindByIdAsync(ub.UserId);
@@ -72,9 +58,10 @@ namespace PenedaVes.Controllers
                 if (await _userManager.IsInRoleAsync(user, "Admin") && !ub.IsChecked)
                 {
                     await _userManager.RemoveFromRoleAsync(user, "Admin");
+                    await RemovePrivilegedCameras(user);
                 }
                 else if (!await _userManager.IsInRoleAsync(user, "Admin")
-                         && ub.IsChecked)  // if the permission were addes
+                         && ub.IsChecked)  // if the permission were added
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
@@ -84,6 +71,18 @@ namespace PenedaVes.Controllers
             
             return RedirectToAction("Index", "Home"); 
         }
-        
+
+        // Stops the user from following cameras exclusive to admins
+        private async Task RemovePrivilegedCameras(ApplicationUser user)
+        {
+            List<FollowedCamera> followedRestrictedCameras =
+                await (from fc in _context.FollowedCamera
+                    where fc.Camera.RestrictedArea &&
+                          fc.UserId == user.Id
+                        select fc).ToListAsync();
+            
+            _context.RemoveRange(followedRestrictedCameras);
+            await _context.SaveChangesAsync();
+        }
     }
 }

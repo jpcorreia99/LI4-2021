@@ -4,7 +4,7 @@ namespace PenedaVes.ViewModels
 {
     public class RootViewModel
     {
-        public List<UserBox> UserBoxesList;
+        public List<UserBox> UserBoxesList { get; set; }
     }
 
     public class UserBox

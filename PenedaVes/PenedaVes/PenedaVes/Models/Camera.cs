@@ -25,8 +25,10 @@ namespace PenedaVes.Models
         [Required]
         [DisplayName("Exclusivo a Admins?")]
         public bool RestrictedArea { get; set; }
-        
-        public List<FollowedCamera> FollowedCameras { get; set; } // many-to-many table between users and cameras
+
+        public Camera()
+        {
+        }
 
         public Camera(int id, string name, float latitude, float longitude, bool restrictedZone, bool restrictedArea)
         {

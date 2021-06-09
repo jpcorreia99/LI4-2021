@@ -156,9 +156,9 @@ namespace PenedaVes.Controllers
                     Console.WriteLine("Sending email to: " + user.UserName);
                     //await _emailService.SendEmail(user.Email, "Notificação de perigo!", message);
                 }
-                else if (user.UseCellphone)
+                if (user.UseCellphone)
                 {
-                    Console.WriteLine("Sending message to " + user.UserName + ", Phone number: " + user.PhoneNumber);
+                    Console.WriteLine("Sending sms to " + user.UserName );
                     //await _smsService.SendSms(user.PhoneNumber, message);
                 }
             }
