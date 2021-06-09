@@ -154,12 +154,12 @@ namespace PenedaVes.Controllers
                 if (user.UseEmail)
                 {
                     Console.WriteLine("Sending email to: " + user.UserName);
-                    await _emailService.SendEmail(user.Email, "Notificação de perigo!", message);
+                    //await _emailService.SendEmail(user.Email, "Notificação de perigo!", message);
                 }
                 if (user.UseCellphone)
                 {
                     Console.WriteLine("Sending sms to " + user.UserName );
-                    await _smsService.SendSms(user.PhoneNumber, message);
+                    //await _smsService.SendSms(user.PhoneNumber, message);
                 }
             }
         }

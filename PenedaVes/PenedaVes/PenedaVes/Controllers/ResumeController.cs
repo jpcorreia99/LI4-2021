@@ -50,13 +50,13 @@ namespace PenedaVes.Controllers
                 if (user.UseEmail)
                 {   
                     Console.WriteLine("Sending email to: " + user.UserName);
-                    await _emailService.SendEmail(user.Email, "Resumo diário", resume);
+                    //await _emailService.SendEmail(user.Email, "Resumo diário", resume);
                 }
 
                 if (user.UseCellphone)
                 {
                     Console.WriteLine("Sending sms to: " + user.UserName);
-                    await _smsService.SendSms(user.PhoneNumber, resume);
+                    //await _smsService.SendSms(user.PhoneNumber, resume);
                 }
 
                 Console.WriteLine(resume);
