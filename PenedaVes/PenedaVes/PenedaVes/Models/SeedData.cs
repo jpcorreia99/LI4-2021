@@ -89,7 +89,7 @@ namespace PenedaVes.Models
                     speciesList
                 );
 
-                Camera lindoso = new Camera("Barragem do lindoso",
+                Camera lindoso = new Camera("Barragem do Lindoso",
                     41.870159, -8.193050, false, false);
 
                 Camera varzea = new Camera("Varzea", 41.902609, -8.220262, true, false);

@@ -36,9 +36,6 @@
                     
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
-                        </li>
                         @if (User.IsInRole("Root"))
                         {
                             <li class="nav-item">
@@ -51,6 +48,9 @@
                             <a class="nav-link text-dark" asp-controller="Settings" asp-action="Index">
                                 @User.Identity.Name
                             </a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
                         </li>
                     }
                     else
