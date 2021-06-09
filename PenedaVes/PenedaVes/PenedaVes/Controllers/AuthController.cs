@@ -67,60 +67,31 @@ namespace PenedaVes.Controllers
                 UseEmail = true,
                 PhoneNumber = vm.PhoneNumber
             };
-            
 
             var result = await _userManager.CreateAsync(user, vm.Password);
-            
             if (!result.Succeeded) return View(vm);
-            
-            if (vm.IsAdmin)
-            {
-                var result2 = _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
-
-                if (!result2.Succeeded)
-                {
-                    foreach (var error in result2.Errors)
-                    {
-                        Console.WriteLine(error.ToString());
-                    }
-                }
-            }
 
             List<Species> allSpecies = await _context.Species.ToListAsync();
-            foreach (var species in allSpecies)
+            foreach (var fs in allSpecies.Select(species => new FollowedSpecies
             {
-                FollowedSpecies fs = new FollowedSpecies
-                {
-                    SpeciesId = species.Id,
-                    UserId = user.Id
-                };
-                    
+                SpeciesId = species.Id,
+                UserId = user.Id
+            }))
+            {
                 await _context.AddAsync(fs);
             }
 
-            List<Camera> cameras;
-            if (vm.IsAdmin)
+            List<Camera> cameras = await _context.Camera.Where(c => !c.RestrictedArea).ToListAsync();
+            foreach (var fc in cameras.Select(camera => new FollowedCamera
             {
-                cameras = await _context.Camera.ToListAsync();
-            }
-            else
+                CameraId = camera.Id,
+                UserId = user.Id
+            }))
             {
-                cameras = await _context.Camera.Where(c => !c.RestrictedArea).ToListAsync();
-            }
-
-            foreach (var camera in cameras)
-            {
-                FollowedCamera fc = new FollowedCamera
-                {
-                    CameraId = camera.Id,
-                    UserId = user.Id
-                };
-                    
                 await _context.AddAsync(fc);
             }
             
             await _context.SaveChangesAsync();
-
             await _signInManager.SignInAsync(user, false);
             return RedirectToAction("Index", "Home");
         }
@@ -128,6 +99,7 @@ namespace PenedaVes.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
+            await _signInManager.SignOutAsync();
             await _signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home");

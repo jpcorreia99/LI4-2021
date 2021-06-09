@@ -7,7 +7,7 @@
 
 <h1>Painel de controlo de administradores</h1>
 
-<form asp-controller="Panel" asp-action="ChangePermissions">
+<form asp-controller="Panel" asp-action="ChangePermissions" method="post">
     <table>
         <h3> Lista de utilizadores</h3>
         @for (int i = 0; i < Model.UserBoxesList.Count; i++)
@@ -25,7 +25,5 @@
         }
     </table>
 
-    <div class="form-group">
-        <input type="submit" value="Alterar" class="btn btn-primary" />
-    </div>
+    <input type="submit" value="Change" class="btn btn-primary" />
 </form>

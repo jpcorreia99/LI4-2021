@@ -44,26 +44,12 @@ namespace PenedaVes.Controllers
                 userBoxes.Add(ub);
             }
 
-            RootViewModel vm = new RootViewModel {UserBoxesList = userBoxes};
-            
-            return View(vm);
+            return View(new RootViewModel {UserBoxesList = userBoxes});
         }
 
         [HttpPost]
         public async Task<IActionResult> ChangePermissions(RootViewModel vm)
         {
-
-            // foreach(var (key, value) in Request.Form)
-            // {
-            //     Console.Write(key +": ");
-            //     Console.WriteLine(value.ToString());
-            // }
-            // Console.WriteLine(vm.UserBoxesList==null);
-            // Console.WriteLine(vm.test==null);
-            //
-            // Console.WriteLine(vm.test);
-            // Console.WriteLine(vm.UserBoxesList.Count);
-            
             foreach (UserBox ub in vm.UserBoxesList)
             {
                 ApplicationUser user = await _userManager.FindByIdAsync(ub.UserId);
@@ -74,7 +60,7 @@ namespace PenedaVes.Controllers
                     await _userManager.RemoveFromRoleAsync(user, "Admin");
                 }
                 else if (!await _userManager.IsInRoleAsync(user, "Admin")
-                         && ub.IsChecked)  // if the permission were addes
+                         && ub.IsChecked)  // if the permission were added
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
