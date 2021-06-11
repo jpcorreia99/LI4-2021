@@ -3,99 +3,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-<script type="text/javascript">  
-    function loadMapScenario() {  
-        const arrLocations= [];
-        arrLocations.push(new Microsoft.Maps.Location(42.054032,-8.455284));
-        arrLocations.push(new Microsoft.Maps.Location(42.131551, -7.846901));
-        arrLocations.push(new Microsoft.Maps.Location(41.640814, -8.374244));
-        arrLocations.push(new Microsoft.Maps.Location(41,698260, -7,775489));
-        
-        
-        const bestView = Microsoft.Maps.LocationRect.fromLocations(arrLocations);
-
-        
-        const map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
-            credentials: "@Model.BingApiKey",  
-        });  
-  
-       map.setView({
-                   mapTypeId: Microsoft.Maps.MapTypeId.road,
-                   center: new Microsoft.Maps.Location(41.88292887810546, -8.21964876845546),
-                   zoom: 11
-               });
-       
-        // Create the infobox for the pushpin  
-        var infobox = null;  
-  
-        //declare addMarker function  
-        function addMarker(latitude, longitude, title,restrictedZone ,link, numberOfSightings)  
-        {  
-            let description = `(${latitude},${longitude})\n\n${numberOfSightings} avistamentos nos últimos 7 dias`
-            let color;
-
-            if (restrictedZone==="True"){
-                color = 'red'; // red if it's a restricted zone
-            }else{
-                color = 'green'
-            }
-                
-            var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: color, title: title, subtitle: "5 avistamentos" });  
-  
-            infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {  
-                visible : false  
-            });  
-  
-            marker.metadata = {  
-                subtitle: link,
-                title: title, 
-                description: description   
-            };  
-           
-            Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);  
-            Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);  
-            Microsoft.Maps.Events.addHandler(marker, 'click', redirectToCameraPage);  
-  
-            infobox.setMap(map);  
-            map.entities.push(marker);  
-            marker.setOptions({ enableHoverStyle: true });  
-        }  
-  
-        function showInfobox(e) {  
-            if (e.target.metadata) {  
-                infobox.setOptions({  
-                    location: e.target.getLocation(),
-                    title: e.target.metadata.title, 
-                    description: e.target.metadata.description,  
-                    visible: true  
-                });  
-            }
-            // // similar behavior as an HTTP redirect
-            // window.location.replace("http://stackoverflow.com");
-        }  
-  
-        function hideInfobox(_e) {  
-            infobox.setOptions({ visible: false })
-        }  
-        
-        function redirectToCameraPage(e){
-            // similar behavior as an HTTP redirect
-            window.location.href = e.target.metadata.subtitle;
-        }
-  
-        //add markers to map  
-        @if (Model.Cameras != null)  
-        {  
-            foreach (CameraInfo camera in Model.Cameras)  
-            {
-                @:addMarker(@camera.Latitude, @camera.Longitude, '@camera.Name', '@camera.RestrictedZone','@camera.PageUrl', @camera.SightingCount);  
-            }  
-        }  
-    }  
-</script>  
-<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario'></script>
-
 <div class="row">  
     <div class="col-md-9 map">  
         <div id="myMap" style="width:100%; height:610px;"></div>  
@@ -117,3 +24,100 @@
         }
     </div>
 </div>  
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">  
+        function loadMapScenario() {  
+            const arrLocations= [];
+            arrLocations.push(new Microsoft.Maps.Location(42.054032,-8.455284));
+            arrLocations.push(new Microsoft.Maps.Location(42.131551, -7.846901));
+            arrLocations.push(new Microsoft.Maps.Location(41.640814, -8.374244));
+            arrLocations.push(new Microsoft.Maps.Location(41,698260, -7,775489));
+            
+            
+            const bestView = Microsoft.Maps.LocationRect.fromLocations(arrLocations);
+    
+            
+            const map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
+                credentials: "@Model.BingApiKey",  
+            });  
+      
+           map.setView({
+                       mapTypeId: Microsoft.Maps.MapTypeId.road,
+                       center: new Microsoft.Maps.Location(41.88292887810546, -8.21964876845546),
+                       zoom: 11
+                   });
+           
+            // Create the infobox for the pushpin  
+            var infobox = null;  
+      
+            //declare addMarker function  
+            function addMarker(latitude, longitude, title,restrictedZone ,link, numberOfSightings)  
+            {  
+                let description = `(${latitude},${longitude})\n\n${numberOfSightings} avistamentos nos últimos 7 dias`
+                let color;
+    
+                if (restrictedZone==="True"){
+                    color = 'red'; // red if it's a restricted zone
+                }else{
+                    color = 'green'
+                }
+                    
+                var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: color, title: title, subtitle: "5 avistamentos" });  
+      
+                infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {  
+                    visible : false  
+                });  
+      
+                marker.metadata = {  
+                    subtitle: link,
+                    title: title, 
+                    description: description   
+                };  
+               
+                Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);  
+                Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);  
+                Microsoft.Maps.Events.addHandler(marker, 'click', redirectToCameraPage);  
+      
+                infobox.setMap(map);  
+                map.entities.push(marker);  
+                marker.setOptions({ enableHoverStyle: true });  
+            }  
+      
+            function showInfobox(e) {  
+                if (e.target.metadata) {  
+                    infobox.setOptions({  
+                        location: e.target.getLocation(),
+                        title: e.target.metadata.title, 
+                        description: e.target.metadata.description,  
+                        visible: true  
+                    });  
+                }
+                // // similar behavior as an HTTP redirect
+                // window.location.replace("http://stackoverflow.com");
+            }  
+      
+            function hideInfobox(_e) {  
+                infobox.setOptions({ visible: false })
+            }  
+            
+            function redirectToCameraPage(e){
+                // similar behavior as an HTTP redirect
+                window.location.href = e.target.metadata.subtitle;
+            }
+      
+            //add markers to map  
+            @if (Model.Cameras != null)  
+            {  
+                foreach (CameraInfo camera in Model.Cameras)  
+                {
+                    @:addMarker(@camera.Latitude, @camera.Longitude, '@camera.Name', '@camera.RestrictedZone','@camera.PageUrl', @camera.SightingCount);  
+                }  
+            }  
+        }  
+    </script>  
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario'></script>
+}
