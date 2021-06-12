@@ -173,6 +173,7 @@ namespace PenedaVes.Data.Repository
             };
         }
 
+        // Returns list of days between the given bounds
         private List<DateTime> GetDays(DateTime lowerLimit, DateTime upperLimit)
         {
             List<DateTime> dateList = new List<DateTime>();

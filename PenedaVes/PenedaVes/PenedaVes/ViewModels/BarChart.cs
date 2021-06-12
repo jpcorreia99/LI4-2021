@@ -23,6 +23,4 @@ namespace PenedaVes.ViewModels
         public string HoverBorderColor{ get; set; }
         public List<int> Data{ get; set; }
     }
-    
-    
 }
