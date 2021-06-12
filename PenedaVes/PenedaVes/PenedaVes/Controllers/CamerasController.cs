@@ -71,6 +71,7 @@ namespace PenedaVes.Controllers
             {
                 Camera = camera,
                 CapturedSightings = sightings,
+                BarChart =  _repository.GetBarChart(sightings, beginningDate, endingDate, false)
             };
             
             return View(vm);

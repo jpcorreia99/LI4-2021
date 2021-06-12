@@ -9,7 +9,6 @@ dotnet add package Twilio
 imagens:
 dotnet add package SixLabors.ImageSharp.Web
 
-
 database:
 dotnet ef database update 0     // limpar db
 dotnet ef database update       // (re)construir db

@@ -72,11 +72,12 @@ namespace PenedaVes.Controllers
             
             List<Sighting> sightings = await _repository.GetSpeciesSightings(species, user, 
                 beginningDate, endingDate);
-            
+
             SpeciesDetailsViewModel vm = new SpeciesDetailsViewModel
             {
                 Species = species,
-                CapturedSightings = sightings
+                CapturedSightings = sightings,
+                BarChart = _repository.GetBarChart(sightings, beginningDate, endingDate, true)
             };
             
             return View(vm);

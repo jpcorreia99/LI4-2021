@@ -18,5 +18,8 @@ namespace PenedaVes.ViewModels
         [Display(Name = "Data de fim")]
         [DataType(DataType.Date)]
         public DateTime EndingDate { get; set; } = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+        // Chart for number of individuals seen in each day
+        public BarChart BarChart { get; set; }
     }
 }

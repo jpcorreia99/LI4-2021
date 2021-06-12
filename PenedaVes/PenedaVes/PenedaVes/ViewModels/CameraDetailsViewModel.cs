@@ -19,5 +19,7 @@ namespace PenedaVes.ViewModels
         [DataType(DataType.Date)]
         public DateTime EndingDate { get; set; } = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
         
+        // Chart for number of sightings captured in each day
+        public BarChart BarChart { get; set; }
     }
 }
