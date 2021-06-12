@@ -21,5 +21,9 @@ namespace PenedaVes.Data.Repository
         
         /* Returns the sightings involving a species in a time limit, subject to the cameras the user follows */
         Task<List<Sighting>> GetSpeciesSightings(Species species, ApplicationUser user, DateTime lowerLimit, DateTime upperLimit);
+
+        /* Creates a Bar Chart based on the time distribuition of the given sightings.
+        If it's species the barchart contains the number of animals seen, if it's a camera it's just the number of sightings*/
+        BarChart GetBarChart(List<Sighting> sightings, DateTime lowerLimit, DateTime upperLimit, bool isSpecies);
     }
 }

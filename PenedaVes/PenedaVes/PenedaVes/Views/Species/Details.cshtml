@@ -84,46 +84,21 @@
     <a asp-action="Index"> Voltar à listagem</a>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h5>Pie chart Example</h5>
-        <div>
-            <canvas id="myPieChart"></canvas>
-        </div>
-    </div>
+<br>
     
-    <div class="col-md-4">
-        <h5>Bar chart Example</h5>
-        <div>
-            <canvas id="myBarChart" width="400" height="200"></canvas>
-        </div>
+<div class="col-md-6" >
+    <h5> Número de indivíduos avistados </h5>
+    <div>
+        <canvas id="myBarChart" width="400" height="200"></canvas>
     </div>
 </div>
 
 @section Scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script type="text/javascript">
         $(function () {
-            let ctx = document.getElementById("myPieChart").getContext("2d");
-        
-            // new Chart(ctx, {
-            //     type: 'pie',
-            //     data: {
-            //             labels: ["Green", "Blue", "Gray", "Purple"],
-            //             datasets: [{
-            //                 backgroundColor: ["#2ecc71","#3498eb","#95aba6","#9b59b6"],
-            //                 data: [12,20,18,50]
-            //             }]
-            //            }
-            //    
-            // })
-            
-             new Chart(ctx, {
-                    type: 'pie',
-                    data: @Html.Raw(Json.Serialize(Model.PieChart))
-                })
-            
             let ctx_bchart = document.getElementById("myBarChart").getContext("2d");
                 
             // var myBarChart = new Chart(ctx_bchart, {
@@ -151,6 +126,5 @@
             
         });
     </script>
-
 }
 

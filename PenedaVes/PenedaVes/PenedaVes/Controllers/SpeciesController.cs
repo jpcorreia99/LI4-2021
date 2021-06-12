@@ -72,17 +72,12 @@ namespace PenedaVes.Controllers
             
             List<Sighting> sightings = await _repository.GetSpeciesSightings(species, user, 
                 beginningDate, endingDate);
-            
-            // fill the piechart
 
-            
-            
             SpeciesDetailsViewModel vm = new SpeciesDetailsViewModel
             {
                 Species = species,
                 CapturedSightings = sightings,
-                PieChart = GetPieChart(),
-                BarChart = GetBarChart()
+                BarChart = _repository.GetBarChart(sightings, beginningDate, endingDate, true)
             };
             
             return View(vm);
@@ -230,52 +225,6 @@ namespace PenedaVes.Controllers
         private bool SpeciesExists(int id)
         {
             return _context.Species.Any(e => e.Id == id);
-        }
-
-        private PieChart GetPieChart()
-        {
-            List<string> labels = new List<string> {"Green", "Blue", "Gray", "Purple"};
-            List<string> backgroundColorList = new List<string>{"#2ecc71","#3498eb","#95aba6","#9b59b6"};
-            List<int> dataList = new List<int>{12,20,18,50};
-            
-            ChildPieChart childModel = new ChildPieChart
-            {
-                BackgroundColor = backgroundColorList,
-                Data = dataList
-            };
-            
-            List<ChildPieChart> datasets = new List<ChildPieChart> {childModel};
-
-            return new PieChart
-            {
-                Labels = labels,
-                Datasets = datasets
-            };
-        }
-        
-        private BarChart GetBarChart()
-        {
-            List<string> labels = new List<string> {"January", "February", "March"};
-            List<int> dataList = new List<int>{65,55,45};
-            
-            BarChartChild barChartChild = new BarChartChild
-            {
-                Label = "Earning",
-                BackgroundColor = "rgba(255,99,132,0.2)",
-                BorderColor = "rgba(255,99,132,1)",
-                BorderWidth = 2,
-                HoverBackgroundColor = "rgba(255,99,132,1)",
-                HoverBorderColor = "rgba(255,99,132,1)",
-                Data = dataList
-            };
-            
-            List<BarChartChild> datasets = new List<BarChartChild> {barChartChild};
-
-            return new BarChart
-            {
-                Labels = labels,
-                Datasets = datasets
-            };
         }
     }
 }
