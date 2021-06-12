@@ -67,12 +67,11 @@ namespace PenedaVes.Controllers
             List<Sighting> sightings = await _repository.GetCameraSightings(camera, user, 
                 beginningDate, endingDate);
 
-           // _repository.GetBarChart(sightings, beginningDate, endingDate, false);
-                
             CameraDetailsViewModel vm = new CameraDetailsViewModel
             {
                 Camera = camera,
                 CapturedSightings = sightings,
+                BarChart =  _repository.GetBarChart(sightings, beginningDate, endingDate, false)
             };
             
             return View(vm);

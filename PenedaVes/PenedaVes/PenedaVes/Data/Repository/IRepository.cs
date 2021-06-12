@@ -5,7 +5,7 @@ using PenedaVes.Models;
 using PenedaVes.ViewModels;
 
 namespace PenedaVes.Data.Repository
-{ //        Startup.cs -> ConfigureServices->   services.AddTransient<IRepository, Repository>();
+{ 
     public interface IRepository
     {
 

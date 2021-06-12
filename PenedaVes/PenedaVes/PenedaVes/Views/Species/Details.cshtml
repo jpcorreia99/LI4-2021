@@ -76,21 +76,23 @@
     }
 </div>
 
+<br>
+    
+<div class="col-md-6" >
+    <h5> Número de Indivíduos Avistados </h5>
+    <div>
+        <canvas id="myBarChart" width="400" height="200"></canvas>
+    </div>
+</div>
+
+<br>
+
 <div>
     @if (User.IsInRole("Admin"))
     {
         <a asp-action="Edit" asp-route-id="@Model.Species.Id">Edit |</a> 
     }
     <a asp-action="Index"> Voltar à listagem</a>
-</div>
-
-<br>
-    
-<div class="col-md-6" >
-    <h5> Número de indivíduos avistados </h5>
-    <div>
-        <canvas id="myBarChart" width="400" height="200"></canvas>
-    </div>
 </div>
 
 @section Scripts
@@ -100,23 +102,7 @@
     <script type="text/javascript">
         $(function () {
             let ctx_bchart = document.getElementById("myBarChart").getContext("2d");
-                
-            // var myBarChart = new Chart(ctx_bchart, {
-            //     type: 'bar',
-            //     data: {
-            //             labels: ["Jan", "Feb", "Mar"],
-            //             datasets: [{
-            //                label: "Earning",
-            //                backgroundColor: "rgba(255,99,132,0.2)",
-            //                borderColor: "rgba(255,99,132,1)",
-            //                borderWidth: 2,
-            //                hoverBackgroundColor: "rgba(255,99,132,1)",
-            //                hoverBorderColor: "rgba(255,99,132,1)",
-            //                data: [65,55,45]
-            //             }]
-            //            }
-            //    
-            // })
+
             
             new Chart(ctx_bchart, {
                             type: 'bar',
@@ -127,4 +113,3 @@
         });
     </script>
 }
-

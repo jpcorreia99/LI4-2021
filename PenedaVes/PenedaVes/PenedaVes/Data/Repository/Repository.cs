@@ -116,8 +116,7 @@ namespace PenedaVes.Data.Repository
                 .OrderByDescending(x => x.CaptureMoment)
                 .ToListAsync();
         }
-
-        // isSpecies - if it's species the barchart contains the number of animals seen, if it's a camera it's just the number of sightings
+        
         public BarChart GetBarChart(List<Sighting> sightings, DateTime lowerLimit, DateTime upperLimit, bool isSpecies)
         {
             List<DateTime> dateList = GetDays(lowerLimit, upperLimit);
@@ -152,25 +151,16 @@ namespace PenedaVes.Data.Repository
                 dailySightings.Add(sightingsCountByDate.ContainsKey(key) ? sightingsCountByDate[key] : 0);
             }
 
-
-            for (int i = 0; i < dateList.Count; i++)
-            {
-                Console.WriteLine(dateList[i].ToString("dd/MM"));
-                Console.WriteLine(dailySightings[i]);
-                Console.WriteLine("");
-            }
-            
-
             string label = isSpecies ? "Animais avistados" : "Avistamentos capturados";
             List<String> dateListString = dateList.Select(day => day.ToString("dd/MM")).ToList();
             BarChartChild barChartChild = new BarChartChild
             {
                 Label = label,
-                BackgroundColor = "rgba(255,99,132,0.2)",
-                BorderColor = "rgba(255,99,132,1)",
+                BackgroundColor = "rgba(33, 150, 234, 0.62)",
+                BorderColor = "rgba(33, 150, 234, 1)",
                 BorderWidth = 2,
-                HoverBackgroundColor = "rgba(255,99,132,1)",
-                HoverBorderColor = "rgba(255,99,132,1)",
+                HoverBackgroundColor = "rgba(33, 150, 234, 1)",
+                HoverBorderColor = "rgba(33, 150, 234, 1)",
                 Data = dailySightings
             };
             
