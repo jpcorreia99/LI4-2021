@@ -8,8 +8,6 @@ using PenedaVes.Data;
 using PenedaVes.Models;
 using PenedaVes.Services.Email;
 using PenedaVes.Services.Phone;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
 
 namespace PenedaVes.Controllers
 {
@@ -122,7 +120,7 @@ namespace PenedaVes.Controllers
                     if (sighting.Species.IsPredatory)
                     {
                         DateTime threeMinutesAgo = DateTime.Now.AddMinutes(-3);
-                    
+                        
                         bool HumansSeen = (from filteredSightings in _context.Sightings
                                 where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
                                       &&  filteredSightings.CaptureMoment > threeMinutesAgo // in the last 3 minutes

@@ -105,13 +105,10 @@
         $(function () {
             let ctx_bchart = document.getElementById("myBarChart").getContext("2d");
 
-            
             new Chart(ctx_bchart, {
                             type: 'bar',
                             data: @Html.Raw(Json.Serialize(Model.BarChart))
-                   
                         })
-            
         });
     </script>
 }

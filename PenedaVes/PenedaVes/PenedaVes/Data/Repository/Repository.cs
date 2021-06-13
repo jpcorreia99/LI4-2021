@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using PenedaVes.Models;
@@ -175,10 +171,10 @@ namespace PenedaVes.Data.Repository
         {
             List<DateTime> dateList = new List<DateTime>();
             
-            while (lowerLimit.AddDays(1) <= upperLimit)
+            while (lowerLimit <= upperLimit)
             {
-                lowerLimit = lowerLimit.AddDays(1);
                 dateList.Add(lowerLimit);
+                lowerLimit = lowerLimit.AddDays(1);
             }
 
             return dateList;
