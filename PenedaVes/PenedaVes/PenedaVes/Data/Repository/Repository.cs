@@ -48,12 +48,9 @@ namespace PenedaVes.Data.Repository
         {
             List<Camera> followedCameras = await GetFollowedCameras(user);
             List<Species> followedSpecies = await GetFollowedSpecies(user);
-            
-            DateTime sevenDaysAgo = DateTime.Today.AddDays(-7);
-            
+
             return await (from sighting in _context.Sightings
-                    where sighting.CaptureMoment > sevenDaysAgo &&
-                          followedCameras.Contains(sighting.Camera) && // select only sightings in the user's camera preferences
+                    where followedCameras.Contains(sighting.Camera) && // select only sightings in the user's camera preferences
                           followedSpecies.Contains(sighting.Species) && // select only sightings in the user's species preferences
                           sighting.CaptureMoment > lowerLimit &&
                           sighting.CaptureMoment <= upperLimit

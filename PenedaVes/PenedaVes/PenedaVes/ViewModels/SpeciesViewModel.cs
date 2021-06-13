@@ -9,6 +9,7 @@ namespace PenedaVes.ViewModels
         public int Id { get; set; }
         [Required]
         [StringLength(100)]
+        [Display]
         public string CommonName { get; set; }
         [Required]
         [StringLength(100)]

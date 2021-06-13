@@ -100,11 +100,11 @@ namespace PenedaVes.Controllers
                     break;
                 case "Humano":
                 {
-                    DateTime fiveMinutesAgo = DateTime.Now.AddMinutes(-3);
+                    DateTime threeMinutesAgo = DateTime.Now.AddMinutes(-3);
                     
                     bool predatorySpeciesSeen = (from filteredSightings in _context.Sightings
                             where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
-                                  &&  filteredSightings.CaptureMoment > fiveMinutesAgo // in the last 5 minutes
+                                  &&  filteredSightings.CaptureMoment > threeMinutesAgo // in the last 3 minutes
                                   && filteredSightings.Species.IsPredatory // where there are predatory species
                             select filteredSightings.Species) // pick the species
                         .Any(); // check if list isn't empty;
@@ -125,7 +125,7 @@ namespace PenedaVes.Controllers
                     
                         bool HumansSeen = (from filteredSightings in _context.Sightings
                                 where filteredSightings.CameraId == sighting.CameraId // sightings in that camera
-                                      &&  filteredSightings.CaptureMoment > threeMinutesAgo // in the last 5 minutes
+                                      &&  filteredSightings.CaptureMoment > threeMinutesAgo // in the last 3 minutes
                                       && filteredSightings.Species.CommonName.Equals("Humano") // where there are predatory species
                                 select filteredSightings) // pick the sightings that contain humans
                             .Any(); // check if list isn't empty;
@@ -150,7 +150,6 @@ namespace PenedaVes.Controllers
             var adminUsers = await _userManager.GetUsersInRoleAsync("admin");
             foreach (ApplicationUser user in adminUsers)
             {
-
                 if (user.UseEmail)
                 {
                     Console.WriteLine("Sending email to: " + user.UserName);
