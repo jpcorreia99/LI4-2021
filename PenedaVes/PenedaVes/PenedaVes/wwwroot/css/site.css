@@ -86,7 +86,7 @@ body {
 
 .SightingListDetails {
   width:100%;
-  height:200px;
+  height:300px;
   border:1px solid #E0E0E0;
   overflow: scroll;
 }

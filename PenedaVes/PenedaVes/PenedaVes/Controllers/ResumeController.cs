@@ -58,8 +58,6 @@ namespace PenedaVes.Controllers
                     Console.WriteLine("Sending sms to: " + user.UserName);
                     //await _smsService.SendSms(user.PhoneNumber, resume);
                 }
-
-                Console.WriteLine(resume);
             }
         }
 
