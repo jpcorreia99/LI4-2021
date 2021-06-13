@@ -60,28 +60,30 @@
     </p>
 </form>
 
-<div class="col-md-6 SightingListDetails">
-    <div class="SightingListHeader">
-        <strong> Notificações de Avistamentos </strong>
-    </div>
 
-    @foreach (var sighting in Model.CapturedSightings)
-    {
-        <div class="Sighting">
-            <p><strong> @sighting.Quantity indivíduos</strong></p>
-            <p>Câmara: <a asp-action="Details" asp-controller="Cameras"
-                          asp-route-id="@sighting.CameraId">@sighting.Camera.Name</a></p>
-            <p>@sighting.CaptureMoment</p>
+<div class="row">
+    <div class="col-md-6 SightingListDetails">
+        <div class="SightingListHeader">
+            <strong> Notificações de Avistamentos </strong>
         </div>
-    }
-</div>
 
-<br>
+        @foreach (var sighting in Model.CapturedSightings)
+        {
+            <div class="Sighting">
+                <p><strong> @sighting.Quantity indivíduos</strong></p>
+                <p>Câmara: <a asp-action="Details" asp-controller="Cameras"
+                              asp-route-id="@sighting.CameraId">@sighting.Camera.Name</a></p>
+                <p>@sighting.CaptureMoment</p>
+            </div>
+        }
+    </div>
     
-<div class="col-md-6" >
-    <h5> Número de Indivíduos Avistados </h5>
-    <div>
-        <canvas id="myBarChart" width="400" height="200"></canvas>
+        
+    <div class="col-md-6" >
+        <h5> Número de Indivíduos Avistados </h5>
+        <div>
+            <canvas id="myBarChart" width="400" height="200"></canvas>
+        </div>
     </div>
 </div>
 

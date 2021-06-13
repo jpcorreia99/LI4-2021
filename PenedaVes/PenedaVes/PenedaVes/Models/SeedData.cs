@@ -220,13 +220,178 @@ namespace PenedaVes.Models
                     CaptureMoment = now.AddDays(-5),
                     SpeciesId = tartanhao.Id,
                     CameraId = soajo.Id,
+                    Quantity = 2
+                };
+                
+                Sighting sighting14 = new Sighting
+                {
+                    CaptureMoment = now.AddHours(-2.5).AddDays(-3),
+                    SpeciesId = corco.Id,
+                    CameraId = soajo.Id,
+                    Quantity = 3
+                };
+                
+                Sighting sighting15 = new Sighting
+                {
+                    CaptureMoment = now.AddHours(-4).AddDays(-2),
+                    SpeciesId = garrano.Id,
+                    CameraId = rio_homem.Id,
+                    Quantity = 5
+                };
+                
+                Sighting sighting16= new Sighting
+                {
+                    CaptureMoment = now.AddHours(-1).AddDays(-5),
+                    SpeciesId = garrano.Id,
+                    CameraId = rio_homem.Id,
                     Quantity = 1
                 };
+                
+                Sighting sighting17 = new Sighting
+                {
+                    CaptureMoment = now.AddMinutes(-15).AddDays(3),
+                    SpeciesId = tartanhao.Id,
+                    CameraId = campo_geres.Id,
+                    Quantity = 3
+                };
+                
+                Sighting sighting18 = new Sighting
+                {
+                    CaptureMoment = now.AddHours(1).AddDays(-5),
+                    SpeciesId = corco.Id,
+                    CameraId = gorbelas.Id,
+                    Quantity = 3
+                };
+                
+                Sighting sighting19 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-6).AddHours(+3.5),
+                    SpeciesId = tartanhao.Id,
+                    CameraId = lindoso.Id,
+                    Quantity = 3
+                };
+
+                Sighting sighting20 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-10),
+                    SpeciesId = lobo.Id,
+                    CameraId = paradela.Id,
+                    Quantity = 4
+                };
+                
+                Sighting sighting21 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-3).AddHours(-2),
+                    SpeciesId = lobo.Id,
+                    CameraId = ermica.Id,
+                    Quantity = 4
+                };
+                
+                Sighting sighting22 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-3).AddHours(-2),
+                    SpeciesId = lobo.Id,
+                    CameraId = bordenca.Id,
+                    Quantity = 2
+                };
+                
+                Sighting sighting23 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-5).AddHours(-7).AddMinutes(14),
+                    SpeciesId = lobo.Id,
+                    CameraId = campo_soajo.Id,
+                    Quantity = 5
+                };
+                
+                Sighting sighting24 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-1).AddHours(-7).AddMinutes(14),
+                    SpeciesId = corco.Id,
+                    CameraId = paradela.Id,
+                    Quantity = 3
+                };
+                
+                Sighting sighting25 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-1).AddHours(-7).AddMinutes(14),
+                    SpeciesId = tartanhao.Id,
+                    CameraId = varzea.Id,
+                    Quantity = 3
+                };
+
+                
+                Sighting sighting26 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-1).AddMinutes(40),
+                    SpeciesId = tartanhao.Id,
+                    CameraId = varzea.Id,
+                    Quantity = 1
+                };
+
+                Sighting sighting27 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-8).AddMinutes(40),
+                    SpeciesId = lobo.Id,
+                    CameraId = varzea.Id,
+                    Quantity = 3
+                };
+                
+                Sighting sighting28 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-2).AddMinutes(40),
+                    SpeciesId = humano.Id,
+                    CameraId = rio_homem.Id,
+                    Quantity = 3
+                };
+                
+                Sighting sighting29 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-3).AddHours(5).AddMinutes(3),
+                    SpeciesId = vibora.Id,
+                    CameraId = gorbelas.Id,
+                    Quantity = 1
+                };
+                
+                Sighting sighting30 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-2).AddHours(-5).AddMinutes(18),
+                    SpeciesId = garrano.Id,
+                    CameraId = varzea.Id,
+                    Quantity = 4
+                };
+                
+                Sighting sighting31 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-6).AddHours(-1).AddMinutes(23),
+                    SpeciesId = corco.Id,
+                    CameraId = varzea.Id,
+                    Quantity = 5
+                };
+                
+                Sighting sighting32 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-10),
+                    SpeciesId = corco.Id,
+                    CameraId = lindoso.Id,
+                    Quantity = 10
+                };
+                
+                Sighting sighting33 = new Sighting
+                {
+                    CaptureMoment = now.AddDays(-8),
+                    SpeciesId = corco.Id,
+                    CameraId = campo_geres.Id,
+                    Quantity = 4
+                };
+
                 
                 context.Sightings.AddRange(
                     sighting1,sighting2,sighting3,sighting4,sighting5,
                     sighting6,sighting7,sighting8, sighting9, sighting10, sighting11,
-                    sighting12, sighting13
+                    sighting12, sighting13, sighting14, sighting15, sighting16, sighting17,
+                    sighting18, sighting19, sighting20, sighting21, sighting22, sighting23,
+                    sighting24, sighting25, sighting26, sighting27,sighting28, sighting29,
+                    sighting30, sighting31, sighting32, sighting33
                 );
                 
                 // creating the root user
@@ -255,9 +420,7 @@ namespace PenedaVes.Models
                 
                 var result = userMgr.CreateAsync(rootUser, "password").GetAwaiter().GetResult();
                 Console.WriteLine(result.Succeeded);
-                
-                
-                
+
                 //add role to user
                 userMgr.AddToRoleAsync(rootUser, adminRole.Name).GetAwaiter().GetResult();
                 userMgr.AddToRoleAsync(rootUser, rootRole.Name).GetAwaiter().GetResult();
