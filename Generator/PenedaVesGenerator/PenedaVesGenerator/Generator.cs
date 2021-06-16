@@ -66,7 +66,7 @@ namespace PenedaVesGenerator
                 }
 
                 Console.WriteLine("---------\n");
-                Console.WriteLine("0 - Escolher Id's\n1 - Random Id's\n2 - Enviar Resumo Diário\n3 - Sair");
+                Console.WriteLine("0 - Escolher Id's\n1 - Random Id's\n2 - Enviar Resumo Diário\n3 - Correr em modo persistente \n4 - Sair");
                 choice = Console.ReadLine();
             }
         }
